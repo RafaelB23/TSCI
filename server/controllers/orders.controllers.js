@@ -1,0 +1,5 @@
+export const getOrders= (req, res) => res.send([])
+export const createOrder= (req, res) => res.send('Nueva orden creada')
+export const updateOrder= (req, res) => res.send('Orden actualizada')
+export const deleteOrder= (req, res) => res.send('Orden eliminada')
+export const getOrder = (req, res) => res.send('Orden especifica')
