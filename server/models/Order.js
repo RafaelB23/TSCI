@@ -7,6 +7,8 @@ const orderSchema = new mongoose.Schema({
         trim: true
     },
     description:{
+        // type: Map,
+        // of: String
         type: new mongoose.Schema({
             specs:{
                 type: String,

@@ -5,8 +5,8 @@ const router = Router()
 
 router.get('/orders', getOrders)
 router.post('/orders', createOrder)
-router.put('/orders', updateOrder)
-router.delete('/orders', deleteOrder)
-router.post('/orders/:id', getOrder)
+router.put('/orders/:id', updateOrder)
+router.delete('/orders/:id', deleteOrder)
+router.get('/orders/:id', getOrder)
 
 export default router
