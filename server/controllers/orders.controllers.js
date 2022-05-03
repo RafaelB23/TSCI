@@ -26,7 +26,7 @@ export const createOrder = async (req, res) => {
         let blueprints
         let created_at = Date()
         console.log(created_at)
-        if(req.files.blueprints){
+        if(req.files?.blueprints){
             const result = await uplaodImage(req.files.blueprints.tempFilePath)
             await fs.remove(req.files.blueprints.tempFilePath)
             blueprints = {
