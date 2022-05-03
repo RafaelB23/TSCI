@@ -25,6 +25,10 @@ const orderSchema = new mongoose.Schema({
     blueprints:{
         url: String,
         public_id: String
+    },
+    date:{
+        type: Date,
+        // required:true
     }
 })
 
