@@ -7,28 +7,27 @@ const orderSchema = new mongoose.Schema({
         trim: true
     },
     description:{
-        // type: Map,
-        // of: String
-        type: new mongoose.Schema({
-            specs:{
-                type: String,
-                required: true,
-                trim: true
-            },
-            no_pieces:{
-                type: Number,
-                required: true,
-                trim: true
-            },
-        }, { _id : false })
+        type: String,
+        // type: new mongoose.Schema({
+        //     specs:{
+        //         type: String,
+        //         // required: true,
+        //         trim: true
+        //     },
+        //     no_pieces:{
+        //         type: Number,
+        //         // required: true,
+        //         trim: true
+        //     },
+        // }, { _id : false })
     },
     blueprints:{
         url: String,
         public_id: String
     },
-    date:{
-        type: Date,
-        // required:true
+    created_at:{
+        type: String,
+        required:true
     }
 })
 
