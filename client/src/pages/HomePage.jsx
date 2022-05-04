@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useOrders } from "../context/ordersContext";
+import { useNavigate } from "react-router-dom";
 
 export function HomePage() {
-  const { orders } = useOrders();
+  const { orders, getOrder } = useOrders();
+  const navigate = useNavigate();
 
   if (orders.length === 0)
     return (
@@ -24,7 +26,7 @@ export function HomePage() {
         <h1 className="text-center">HomePage</h1>
       </div>
       <div className="d-flex justify-content-center">
-        <Link to={"/neworder"} className="btn btn-primary mt-2">
+        <Link to={"/order"} className="btn btn-primary mt-2">
           Crear nueva orden
         </Link>
       </div>
@@ -43,14 +45,23 @@ export function HomePage() {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
-              <tr key={order._id} role="button" onClick={()=>{console.log(order._id)}}>
-                <td>{order._id}</td>
-                <td>{order.owner}</td>
-                <td className="text-break">{order.description.specs}</td>
-                <td className="text-end">{order.description.no_pieces}</td>
-              </tr>
-            )).reverse()}
+            {orders
+              .map((order) => (
+                <tr
+                  key={order._id}
+                  role="button"
+                  onClick={async () => {
+                    await getOrder(order._id)
+                    navigate('/order/' + order._id)
+                  }}
+                >
+                  <td>{order._id}</td>
+                  <td>{order.owner}</td>
+                  <td className="text-break">{order.description.specs}</td>
+                  <td className="text-end">{order.description.no_pieces}</td>
+                </tr>
+              ))
+              .reverse()}
           </tbody>
         </table>
       </div>

@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react'
-import { createOrderRequest, getOrdersRequest } from '../api/orders'
+import { createOrderRequest, getOrderRequest, getOrdersRequest } from '../api/orders'
 
 export const ordersContext = createContext()
 
@@ -11,6 +11,7 @@ export const useOrders = () => {
 export const OrderProvider = ({ children }) => {
 
     const [orders, setOrders] = useState([])
+    const [order, setOrder] = useState([])
 
     const getOrders = async () => {
         try {
@@ -28,14 +29,22 @@ export const OrderProvider = ({ children }) => {
         setOrders([...orders, res.data])
     }
 
+    const getOrder = async (orderId) => {
+        console.log(orderId)
+        const res = await getOrderRequest(orderId)
+        setOrder(res.data)
+    }
+
     useEffect(() => {
         getOrders()
     }, [])
 
     return <ordersContext.Provider value={{
         orders,
+        order,
         getOrders,
-        createOrder
+        createOrder,
+        getOrder
     }}>
         {children}
     </ordersContext.Provider>
