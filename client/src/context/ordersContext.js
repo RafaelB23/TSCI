@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react'
-import { getOrdersRequest } from '../api/orders'
+import { createOrderRequest, getOrdersRequest } from '../api/orders'
 
 export const ordersContext = createContext()
 
@@ -16,11 +16,16 @@ export const OrderProvider = ({ children }) => {
         try {
             const res = await getOrdersRequest()
             setOrders(res.data)
-            console.log(res.data)
         } catch (error) {
             console.log('No se obtuvieron datos')
         }
 
+    }
+
+    const createOrder = async (order) => {
+        // console.log({orderContext: order})
+        const res = await createOrderRequest(order)
+        setOrders([...orders, res.data])
     }
 
     useEffect(() => {
@@ -29,7 +34,8 @@ export const OrderProvider = ({ children }) => {
 
     return <ordersContext.Provider value={{
         orders,
-        getOrders
+        getOrders,
+        createOrder
     }}>
         {children}
     </ordersContext.Provider>

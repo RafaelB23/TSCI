@@ -1,17 +1,18 @@
 import {v2 as cloudinary} from 'cloudinary'
+import { CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } from '../config.js'
+
 
 
 cloudinary.config({ 
     cloud_name: 'rambtest', 
-    api_key: '153453978869194', 
-    api_secret: 'hh_hPEzL4kjHjFVkPdqTd2jm9S4',
+    api_key: CLOUDINARY_API_KEY, 
+    api_secret: CLOUDINARY_API_SECRET,
     secure: true
 });
 
 export const uplaodImage = async filePath => {
     return await cloudinary.uploader.upload(filePath, {
         folder: 'test/orders'
-        // folder: `test/orders/${orderId}/`
     })
 }
 
