@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react'
-import { createOrderRequest, getOrderRequest, getOrdersRequest } from '../api/orders'
+import { createOrderRequest, deleteOrderRequest, getOrderRequest, getOrdersRequest, updateOrderRequest } from '../api/orders'
 
 export const ordersContext = createContext()
 
@@ -11,7 +11,6 @@ export const useOrders = () => {
 export const OrderProvider = ({ children }) => {
 
     const [orders, setOrders] = useState([])
-    const [order, setOrder] = useState([])
 
     const getOrders = async () => {
         try {
@@ -24,15 +23,23 @@ export const OrderProvider = ({ children }) => {
     }
 
     const createOrder = async (order) => {
-        // console.log({orderContext: order})
         const res = await createOrderRequest(order)
         setOrders([...orders, res.data])
     }
 
     const getOrder = async (orderId) => {
-        console.log(orderId)
         const res = await getOrderRequest(orderId)
-        setOrder(res.data)
+        return res.data
+    }
+
+    const updateOrder = async (orderId, order) => {
+        const res = await updateOrderRequest(orderId, order)
+        setOrders(orders.map((order) => (order._id === orderId ? res.data : order)))
+    }
+
+    const deleteOrder = async (orderId) => {
+        await deleteOrderRequest(orderId)
+        setOrders(orders.filter((order) => order._id !== orderId))
     }
 
     useEffect(() => {
@@ -41,10 +48,11 @@ export const OrderProvider = ({ children }) => {
 
     return <ordersContext.Provider value={{
         orders,
-        order,
         getOrders,
         createOrder,
-        getOrder
+        getOrder,
+        updateOrder,
+        deleteOrder
     }}>
         {children}
     </ordersContext.Provider>

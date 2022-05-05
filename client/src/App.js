@@ -1,7 +1,8 @@
 import { HomePage, NewOrderPage, OrderPage, NotFound } from './pages'
 import { Route, Routes } from 'react-router-dom'
 import { OrderProvider } from './context/ordersContext'
-import { NavBar } from './componets'
+import { NavBar } from './components'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path='/order/:id' element={<OrderPage />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
+      <Toaster/>
     </OrderProvider>
   )
 }

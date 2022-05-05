@@ -1,5 +1,4 @@
 import React from "react";
-import * as bootstrap from "bootstrap";
 
 export function NavBar() {
     return (
@@ -32,14 +31,14 @@ export function NavBar() {
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
+                            <a className="nav-link" href="/inventario">
                                 Inventario
                             </a>
                         </li>
                         <li className="nav-item dropdown">
                             <a
                                 className="nav-link dropdown-toggle"
-                                href="#"
+                                href="/planta"
                                 id="navbarDropdownMenuLink"
                                 role="button"
                                 data-bs-toggle="dropdown"
@@ -52,17 +51,17 @@ export function NavBar() {
                                 aria-labelledby="navbarDropdownMenuLink"
                             >
                                 <li>
-                                    <a className="dropdown-item" href="#">
+                                    <a className="dropdown-item" href="/operadores">
                                         Operadores
                                     </a>
                                 </li>
                                 <li>
-                                    <a className="dropdown-item" href="#">
+                                    <a className="dropdown-item" href="/maquinas">
                                         Maquinas
                                     </a>
                                 </li>
                                 <li>
-                                    <a className="dropdown-item" href="#">
+                                    <a className="dropdown-item" href="/about">
                                         Algo más
                                     </a>
                                 </li>
