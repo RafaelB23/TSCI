@@ -4,8 +4,8 @@ import fs from 'fs-extra'
 
 export const getOrders = async (req, res) => {
     try {
-        const order = await Order.find()
-        res.send(order)
+        const order = await Order.find({})
+        res.json(order)
     } catch (error) {
         return res.status(500).json({message: error.message})
     }
@@ -25,7 +25,6 @@ export const createOrder = async (req, res) => {
         const { owner, description} = req.body
         let blueprints
         let created_at = Date()
-        console.log(created_at)
         if(req.files?.blueprints){
             const result = await uplaodImage(req.files.blueprints.tempFilePath)
             await fs.remove(req.files.blueprints.tempFilePath)
@@ -45,6 +44,7 @@ export const createOrder = async (req, res) => {
 export const updateOrder = async (req, res) => {
     try {
         const updatedOrder = await Order.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        console.log('Actualizada')
         return res.send(updatedOrder)
     } catch (error) {
         return res.status(500).json({message: error.message})

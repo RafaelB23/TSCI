@@ -1,2 +1,2 @@
-export { NavBar } from './navBar'
+export { NavBar } from './NavBar'
 export { FormOrder } from './FormOrder'

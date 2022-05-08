@@ -26,7 +26,7 @@ export function FormOrder() {
         btn.style.display = "inline";
       }
     })();
-  }, [params.id]);
+  }, [params.id, getOrder]);
 
   const handleDelete = () => {
     toast((t) => (

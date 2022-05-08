@@ -5,6 +5,7 @@ export const ordersContext = createContext()
 
 export const useOrders = () => {
     const context = useContext(ordersContext)
+    if (!context) throw new Error("Order Provider is missing");
     return context
 }
 
@@ -12,15 +13,12 @@ export const OrderProvider = ({ children }) => {
 
     const [orders, setOrders] = useState([])
 
-    const getOrders = async () => {
-        try {
+    useEffect(() => {
+        (async () => {
             const res = await getOrdersRequest()
             setOrders(res.data)
-        } catch (error) {
-            console.log('No se obtuvieron datos')
-        }
-
-    }
+        })()
+    }, [])
 
     const createOrder = async (order) => {
         const res = await createOrderRequest(order)
@@ -42,13 +40,8 @@ export const OrderProvider = ({ children }) => {
         setOrders(orders.filter((order) => order._id !== orderId))
     }
 
-    useEffect(() => {
-        getOrders()
-    }, [])
-
     return <ordersContext.Provider value={{
         orders,
-        getOrders,
         createOrder,
         getOrder,
         updateOrder,

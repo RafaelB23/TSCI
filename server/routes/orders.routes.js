@@ -4,9 +4,9 @@ import { getOrders, createOrder, updateOrder, deleteOrder, getOrder} from '../co
 const router = Router()
 
 router.get('/orders', getOrders)
+router.get('/orders/:id', getOrder)
 router.post('/orders', createOrder)
 router.put('/orders/:id', updateOrder)
 router.delete('/orders/:id', deleteOrder)
-router.get('/orders/:id', getOrder)
 
 export default router

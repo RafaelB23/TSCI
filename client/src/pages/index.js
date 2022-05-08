@@ -1,4 +1,5 @@
 export { HomePage } from './HomePage'
+export { OrdersPage } from './OrdersPage' 
 export { NewOrderPage } from './NewOrderPage'
 export { OrderPage} from './OrderPage'
 export { NotFound } from './404'
