@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export function FormOrder() {
-  const { createOrder, getOrder, updateOrder, deleteOrder, testOrder } = useOrders();
+  const { createOrder, getOrder, updateOrder, deleteOrder, testOrder, deleteTmp } = useOrders();
   const navigate = useNavigate();
   const params = useParams();
   
@@ -91,7 +91,10 @@ export function FormOrder() {
             }
           } else {
             try {
-              await createOrder(values);
+              console.log(values);
+              // await createOrder(values);
+              console.log(values.blueprints._id);
+              await deleteTmp(values.blueprints._id)
               toast.success("La orden se a guardado exitosamente");
               // navigate("/");
             } catch (error) {
@@ -153,10 +156,8 @@ export function FormOrder() {
                 multiple
                 onChange={async (e) => {
                   const files = e.target.files;
-                  console.log(files);
                   const tempPaths = await testOrder(files)
-                  console.log('uri_temp: ', await tempPaths)
-                  // setFieldValue('blueprints', files);
+                  setFieldValue('blueprints', tempPaths.data);
                 }}
               />
             </div>

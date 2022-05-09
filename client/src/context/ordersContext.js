@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react'
-import { createOrderRequest, deleteOrderRequest, getOrderRequest, getOrdersRequest, testOrderRequest, updateOrderRequest } from '../api/orders'
+import { createOrderRequest, deleteOrderRequest, getOrderRequest, getOrdersRequest, testOrderRequest, updateOrderRequest, deleteTmpRequest } from '../api/orders'
 
 export const ordersContext = createContext()
 
@@ -36,6 +36,10 @@ export const OrderProvider = ({ children }) => {
         return res
     }
 
+    const deleteTmp = async (tmpId) => {
+        await deleteTmpRequest(tmpId)
+    }
+
     const updateOrder = async (orderId, order) => {
         const res = await updateOrderRequest(orderId, order)
         setOrders(orders.map((order) => (order._id === orderId ? res.data : order)))
@@ -52,7 +56,8 @@ export const OrderProvider = ({ children }) => {
         getOrder,
         updateOrder,
         deleteOrder,
-        testOrder
+        testOrder,
+        deleteTmp
     }}>
         {children}
     </ordersContext.Provider>

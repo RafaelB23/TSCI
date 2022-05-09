@@ -18,14 +18,11 @@ export const getOrders = async (req, res) => {
 
 
 export const createOrder = async (req, res) => {
-  console.log(req.body.blueprints);
+//   console.log(req.body.blueprints);
   const files = req.body.blueprints;
-  for (let f in files) {
-    console.log(f);
-  }
   try {
-    const files = req.files;
-    console.log(files);
+    // const files = req.files;
+    // console.log(files);
 
     // console.log(req.files)
     // console.log(res.files)
@@ -115,7 +112,6 @@ export const getTmpFile = async (req, res) => {
     return res.json(tmp)
 };
 export const postTmpFiles = async (req, res) => {
-    console.log("Ejecutando TestOrder");
     try {
       var obj = [];
       const mfiles = req.files["files[]"];
@@ -138,15 +134,13 @@ export const postTmpFiles = async (req, res) => {
       };
   
       if (mfiles["tempFilePath"]) {
-        console.log(unico());
         obj = unico();
       } else {
-        console.log(multi());
         obj = multi();
       }
       const newSche = new Sche({files: obj})
-      await newSche.save()
-      return res.json(obj);
+      const c = await newSche.save()
+      return res.json(c);
     } catch (error) {
       console.log(error.message);
       // return res.status(500).json({message: error.message})
@@ -156,6 +150,12 @@ export const updateTmpFiles = async (req, res) => {};
 export const deleteTmpFiles = async (req, res) => {
     try {
         const tmpRemoved = await Sche.findByIdAndDelete(req.params.id);
+        // console.log(tmpRemoved)
+        const paths = tmpRemoved.files
+        for(let p in paths){
+            console.log(paths[p])
+            await fs.remove(paths[p])
+        }
         if (!tmpRemoved) return res.sendStatus(404);
 
         return res.sendStatus(204);
