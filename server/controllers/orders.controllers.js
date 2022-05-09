@@ -4,8 +4,10 @@ import fs from "fs-extra";
 import fileUpload from "express-fileupload";
 import mongoose from "mongoose";
 
-const Sche = mongoose.model('Tmp', new mongoose.Schema({files: {type: Object}}))
-
+const Sche = mongoose.model(
+  "Tmp",
+  new mongoose.Schema({ files: { type: Object } })
+);
 
 export const getOrders = async (req, res) => {
   try {
@@ -16,46 +18,25 @@ export const getOrders = async (req, res) => {
   }
 };
 
-
 export const createOrder = async (req, res) => {
-//   console.log(req.body.blueprints);
-  const files = req.body.blueprints;
   try {
-    // const files = req.files;
-    // console.log(files);
-
-    // console.log(req.files)
-    // console.log(res.files)
-
-    // const files = req.files.blueprints
-
-    // const promise = files.map((file) => {
-    //     console.log(file)
-    //     const savePath = ('../upload')
-    //     return file.mv(savePath)
-    // })
-
-    // await Promise.all(promise)
-
-    // const { owner, description, blueprints} = req.body
-    // let created_at = Date()
-    // console.log(req.files)
-    // if(req.files?.blueprints){
-    //     const result = await uplaodImage(req.files.blueprints.tempFilePath)
-    //     // console.log(result)
-    //     // await fs.remove(req.files.blueprints.tempFilePath)
-    //     blueprints = {
-    //         url: result.secure_url,
-    //         public_id: result.public_id
-    //     }
-    // }
-    // const newOrder = new Order({ owner, description, blueprints, created_at})
-    // // console.log(newOrder)
-    // await newOrder.save()
-    // return res.json(newOrder)
-    return "Hola mundo";
+    const { owner, description } = req.body;
+    const bp = [];
+    if (req.body.blueprints?.files) {
+      const files = req.body.blueprints.files;
+      for (let f in files) {
+        const result = await uplaodImage(files[f]);
+        bp.push({
+          url: result.secure_url,
+          public_id: result.public_id,
+        });
+      }
+    }
+    const newOrder = new Order({ owner, description, blueprints: bp });
+    await newOrder.save();
+    return res.json(newOrder)
   } catch (error) {
-    // console.log(error)
+    console.log(error.message)
     return res.status(500).json({ message: error.message });
   }
 };
@@ -107,59 +88,55 @@ export const getTmpFiles = async (req, res) => {
   }
 };
 export const getTmpFile = async (req, res) => {
-    console.log(req.params)
-    const tmp = await Sche.find({files: ["upload\\tmp-7-1652081178547"]})
-    return res.json(tmp)
+  
 };
 export const postTmpFiles = async (req, res) => {
-    try {
-      var obj = [];
-      const mfiles = req.files["files[]"];
-  
-      const unico = () => {
-        var arr = [];
-        arr.push(mfiles["tempFilePath"]);
-        return arr;
-      };
-      const multi = () => {
-        var arr = [];
-        for (let i in mfiles) {
-          for (let p in mfiles[i]) {
-            if (p === "tempFilePath") {
-              arr.push(mfiles[i][p]);
-            }
+  try {
+    var obj = [];
+    const mfiles = req.files["files[]"];
+
+    const unico = () => {
+      var arr = [];
+      arr.push(mfiles["tempFilePath"]);
+      return arr;
+    };
+    const multi = () => {
+      var arr = [];
+      for (let i in mfiles) {
+        for (let p in mfiles[i]) {
+          if (p === "tempFilePath") {
+            arr.push(mfiles[i][p]);
           }
         }
-        return arr;
-      };
-  
-      if (mfiles["tempFilePath"]) {
-        obj = unico();
-      } else {
-        obj = multi();
       }
-      const newSche = new Sche({files: obj})
-      const c = await newSche.save()
-      return res.json(c);
-    } catch (error) {
-      console.log(error.message);
-      // return res.status(500).json({message: error.message})
+      return arr;
+    };
+
+    if (mfiles["tempFilePath"]) {
+      obj = unico();
+    } else {
+      obj = multi();
     }
-  };
+    const newSche = new Sche({ files: obj });
+    const c = await newSche.save();
+    return res.json(c);
+  } catch (error) {
+    console.log(error.message);
+    // return res.status(500).json({message: error.message})
+  }
+};
 export const updateTmpFiles = async (req, res) => {};
 export const deleteTmpFiles = async (req, res) => {
-    try {
-        const tmpRemoved = await Sche.findByIdAndDelete(req.params.id);
-        // console.log(tmpRemoved)
-        const paths = tmpRemoved.files
-        for(let p in paths){
-            console.log(paths[p])
-            await fs.remove(paths[p])
-        }
-        if (!tmpRemoved) return res.sendStatus(404);
+  try {
+    const tmpRemoved = await Sche.findByIdAndDelete(req.params.id);
+    const paths = tmpRemoved.files;
+    for (let p in paths) {
+      await fs.remove(paths[p]);
+    }
+    if (!tmpRemoved) return res;
 
-        return res.sendStatus(204);
-      } catch (error) {
-        return res.status(500).json({ message: error.message });
-      }
+    return res;
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
 };

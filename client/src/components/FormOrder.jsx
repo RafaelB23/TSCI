@@ -6,11 +6,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export function FormOrder() {
-  const { createOrder, getOrder, updateOrder, deleteOrder, testOrder, deleteTmp } = useOrders();
+  const {
+    createOrder,
+    getOrder,
+    updateOrder,
+    deleteOrder,
+    testOrder,
+    deleteTmp,
+  } = useOrders();
   const navigate = useNavigate();
   const params = useParams();
-  
-  const [files, setFiles] = useState([])
 
   const [order, setOrder] = useState({
     owner: "",
@@ -91,14 +96,19 @@ export function FormOrder() {
             }
           } else {
             try {
-              console.log(values);
-              // await createOrder(values);
-              console.log(values.blueprints._id);
-              await deleteTmp(values.blueprints._id)
-              toast.success("La orden se a guardado exitosamente");
-              // navigate("/");
+              await toast.promise(createOrder(values), {
+                loading: "Cargando...",
+                success: "La orden se a guardado exitosamente",
+                error: "No se a podido completar el registro de la orden",
+              });
+              
+              if(values.blueprints?._id){
+                const status = await deleteTmp(values.blueprints._id);
+                console.log(status);
+              }
+              navigate("/");
             } catch (error) {
-              console.log("Error");
+              console.log(error);
               toast.error("No se a podido completar el registro de la orden");
             }
           }
@@ -148,18 +158,36 @@ export function FormOrder() {
               <label htmlFor="blueprints" className="form-label fw-bold">
                 Planos
               </label>
-              <input
-                className="form-control"
-                type="file"
-                name="mFiles"
-                id=""
-                multiple
-                onChange={async (e) => {
-                  const files = e.target.files;
-                  const tempPaths = await testOrder(files)
-                  setFieldValue('blueprints', tempPaths.data);
-                }}
-              />
+              <div className="input-group">
+                <input
+                  className="form-control"
+                  type="file"
+                  name="mFiles"
+                  id="input-files"
+                  multiple
+                  onChange={async (e) => {
+                    const files = e.target.files;
+                    if (files) {
+                      const btn = document.getElementById("input-delete");
+                      btn.style.display = "inline";
+                    }
+                    const tempPaths = await testOrder(files);
+                    setFieldValue("blueprints", tempPaths.data);
+                  }}
+                />
+                <button
+                  id="input-delete"
+                  type="button"
+                  className="btn-close m-auto ps-3"
+                  style={{ display: "none" }}
+                  onClick={() => {
+                    const inp = document.getElementById("input-files");
+                    inp.value = "";
+                    const btn = document.getElementById("input-delete");
+                    btn.style.display = "none";
+                  }}
+                />
+              </div>
             </div>
 
             <div className="d-flex justify-content-end">
@@ -179,29 +207,6 @@ export function FormOrder() {
           </Form>
         )}
       </Formik>
-      <form onSubmit={async e => {
-        e.preventDefault()
-        console.log('Submit', files)
-        await testOrder(files)
-      }} encType="multipart/form-data">
-        <label htmlFor="mFiles" className="form-label fw-bold">
-          Archivos
-        </label>
-        <input
-          className="form-control"
-          type="file"
-          name="mFiles"
-          id="mFiles"
-          multiple
-          onChange={(e)=>{
-            const data = e.target.files
-            console.log(data)
-            setFiles(data)
-          }}
-        />
-        <input className="mt-4 btn btn-primary" type="submit" value="upload" />
-      </form>
     </div>
   );
-  
 }

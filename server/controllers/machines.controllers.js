@@ -26,10 +26,13 @@ export const createMachine = async (req, res) => {
     const machine = await Machine.find({
         description: newMachine.description
     });
-    machine.length!==0 ? console.log('Es posible que ya exista') : await newMachine.save();
+    if(machine.length!==0){
+      throw new Error('Es posible que ya exista')
+    }else{
+      await newMachine.save();
+    }
     return res.json(newMachine);
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ message: error.message });
   }
 };

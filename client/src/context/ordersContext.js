@@ -24,6 +24,7 @@ export const OrderProvider = ({ children }) => {
         // console.log("res: ", order)
         const res = await createOrderRequest(order)
         setOrders([...orders, res.data])
+        return res
     }
 
     const getOrder = async (orderId) => {

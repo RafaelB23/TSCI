@@ -13,11 +13,13 @@ const orderSchema = new mongoose.Schema({
           type: String,
           required: true,
           trim: true,
+          default: ''
         },
         no_pieces: {
           type: Number,
           required: true,
           trim: true,
+          default: 0
         },
       },
       { _id: false }
@@ -25,6 +27,7 @@ const orderSchema = new mongoose.Schema({
   },
   blueprints: {
     type: Object,
+    default: null
   },
   created_at: {
     type: String,
