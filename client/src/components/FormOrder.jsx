@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field /* , ErrorMessage  */ } from "formik";
 import * as Yup from "yup";
 import { useOrders } from "../context/ordersContext.js";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export function FormOrder() {
-  const { createOrder, getOrder, updateOrder, deleteOrder } = useOrders();
+  const { createOrder, getOrder, updateOrder, deleteOrder, testOrder } = useOrders();
   const navigate = useNavigate();
   const params = useParams();
+  
+  const [files, setFiles] = useState([])
 
   const [order, setOrder] = useState({
     owner: "",
@@ -16,6 +18,7 @@ export function FormOrder() {
       specs: "",
       no_pieces: "",
     },
+    blueprints: null,
   });
   useEffect(() => {
     (async () => {
@@ -33,21 +36,32 @@ export function FormOrder() {
       <span>
         ¿Deseas <b>eliminar</b> esta orden?
         <div className="mt-2 d-flex justify-content-center">
-          <button className="btn btn-danger me-3" onClick={() => {
-            deleteOrder(params.id)
-            toast.dismiss(t.id)
-            toast.success('La orden a sido eliminada exitosamente')
-            navigate("/")
-            }}>
+          <button
+            className="btn btn-danger me-3"
+            onClick={async () => {
+              try {
+                await deleteOrder(params.id);
+                toast.success("La orden a sido eliminada exitosamente");
+                toast.dismiss(t.id);
+                navigate("/");
+              } catch (error) {
+                toast.error("No se a podido eliminar la  orden");
+                toast.dismiss(t.id);
+              }
+            }}
+          >
             Eliminar
           </button>
-          <button className="btn btn-primary" onClick={() => toast.dismiss(t.id)}>
+          <button
+            className="btn btn-primary"
+            onClick={() => toast.dismiss(t.id)}
+          >
             Cancelar
           </button>
         </div>
       </span>
-    ))
-  }
+    ));
+  };
 
   return (
     <div className="container-sm col-6">
@@ -65,62 +79,88 @@ export function FormOrder() {
           }),
         })}
         onSubmit={async (values, actions) => {
+          // const files = document.getElementById('formFileMultiple')
+          // console.log(values);
           if (params.id) {
-            await updateOrder(params.id, values);
+            try {
+              await updateOrder(params.id, values);
+              toast.success("La orden se a guardado exitosamente");
+              navigate("/");
+            } catch (error) {
+              toast.error("No se a podido actualizar la orden");
+            }
           } else {
-            await createOrder(values);
+            try {
+              await createOrder(values);
+              toast.success("La orden se a guardado exitosamente");
+              // navigate("/");
+            } catch (error) {
+              console.log("Error");
+              toast.error("No se a podido completar el registro de la orden");
+            }
           }
-          toast.success('La orden se a guardado exitosamente')
-          navigate("/");
         }}
         enableReinitialize
       >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, setFieldValue }) => (
           <Form
             onSubmit={handleSubmit}
             className="container-sm border border-ligth mt-4 p-3"
+            encType="multipart/form-data"
+            method="post"
           >
-            <label htmlFor="owner" className="block fw-bold mb-2">
+            <label htmlFor="owner" className="form-label fw-bold">
               Nombre del cliente
             </label>
             <Field
+              id="owner"
               className="form-control mb-3"
               name="owner"
               placeholder="Cliente"
+              required
             />
-            <ErrorMessage
-              component="p"
-              className="text-danger fs-6"
-              name="owner"
-            />
-            <label htmlFor="owner" className="block fw-bold mb-2">
+            <label htmlFor="specs" className="form-label fw-bold">
               Decripción
             </label>
             <Field
+              id="specs"
               component="textarea"
               className="form-control mb-3"
               name="description.specs"
               placeholder="Especificaciones"
+              required
             />
-            <ErrorMessage
-              component="p"
-              className="text-danger fs-6"
-              name="description.specs"
-            />
-            <label htmlFor="owner" className="block fw-bold mb-2">
+            <label htmlFor="no_pieces" className="form-label fw-bold">
               Numero de piezas
             </label>
             <Field
+              id="no_pieces"
               className="form-control mb-3"
               name="description.no_pieces"
               placeholder="Numero de piezas"
               type="number"
+              required
             />
-            <ErrorMessage
-              component="p"
-              className="text-danger fs-6"
-              name="description.no_pieces"
-            />
+            <div className="mb-3">
+              <label htmlFor="blueprints" className="form-label fw-bold">
+                Planos
+              </label>
+              <input
+                className="form-control"
+                type="file"
+                name="mFiles"
+                id=""
+                multiple
+                onChange={async (e) => {
+                  const files = e.target.files;
+                  console.log(files);
+                  const tempPaths = await testOrder(files)
+                  console.log('uri_temp: ', await tempPaths)
+                  // setFieldValue('blueprints', files);
+                }}
+              />
+            </div>
+
             <div className="d-flex justify-content-end">
               <button type="submit" className="btn btn-primary col-3">
                 Guardar
@@ -138,6 +178,29 @@ export function FormOrder() {
           </Form>
         )}
       </Formik>
+      <form onSubmit={async e => {
+        e.preventDefault()
+        console.log('Submit', files)
+        await testOrder(files)
+      }} encType="multipart/form-data">
+        <label htmlFor="mFiles" className="form-label fw-bold">
+          Archivos
+        </label>
+        <input
+          className="form-control"
+          type="file"
+          name="mFiles"
+          id="mFiles"
+          multiple
+          onChange={(e)=>{
+            const data = e.target.files
+            console.log(data)
+            setFiles(data)
+          }}
+        />
+        <input className="mt-4 btn btn-primary" type="submit" value="upload" />
+      </form>
     </div>
   );
+  
 }

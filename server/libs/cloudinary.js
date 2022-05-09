@@ -11,6 +11,7 @@ cloudinary.config({
 });
 
 export const uplaodImage = async filePath => {
+    console.log(filePath)
     return await cloudinary.uploader.upload(filePath, {
         folder: 'test/orders'
     })

@@ -6,7 +6,7 @@ export default function EmptyOrders() {
         <div className="App-header mt-4">
             <div className="text-center h1">HomePage</div>
             <div className="d-flex justify-content-center">
-                <Link to={"/order"} className="btn btn-primary mt-2">
+                <Link to={"/orden"} className="btn btn-primary mt-2">
                     Crear nueva orden
                 </Link>
             </div>
