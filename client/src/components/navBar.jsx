@@ -71,7 +71,7 @@ export function NavBar() {
               aria-label="Search"
             />
             <button className="btn btn-outline-light" type="submit">
-              Search
+              Buscar
             </button>
           </form>
         </div>
