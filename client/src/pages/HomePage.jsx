@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-// import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 export function HomePage() {
@@ -11,50 +10,30 @@ export function HomePage() {
       navigate("/ordenes");
     }
   });
-  const handleSubmit = () => {
-    userState = true;
-    navigate("/ordenes");
-  };
+  const handleLogin=(()=>{
+    navigate("/login");
+  })
+  const handleSignup=(()=>{
+    navigate("/signup");
+  })
   return (
-    <div className="container col-4 mt-4 text-center">
-      <h1 className="h3 mb-3">Iniciar sesión</h1>
-      <form className="form-signin">
-        <div className="form-floating">
-          <input
-            type="email"
-            className="form-control mb-3"
-            id="floatingInput"
-            placeholder="name@example.com"
-          />
-          <label htmlFor="floatingInput">Correo Electronico</label>
-        </div>
-        <div className="form-floating">
-          <input
-            type="password"
-            className="form-control mb-3"
-            id="floatingPassword"
-            placeholder="Contraseña"
-          />
-          <label htmlFor="floatingPassword">Contraseña</label>
-          <div className="text-end">
-            <a href="/recoverypassword" className="link-primary">
-              Recuperar contraseña
-            </a>
-          </div>
-          <button
-            onClick={handleSubmit}
-            className="btn-lg btn-primary w-100 my-4"
-          >
-            Iniciar sesión
+    <div className="d-flex flex-column h-75 align-items-center justify-content-center">
+      <div
+        className="container text-center m-auto g-5 h-100"
+        style={{ width: "30%" }}
+      >
+        <h1 className="mt-4">Bienvenido</h1>
+        <div className="d-flex align-items-center h-75">
+        <div class="d-grid gap-4 col-8 mx-auto">
+          <button class="btn btn-primary" type="button" onClick={handleLogin}>
+            Inicia sesión
+          </button>
+          <button class="btn btn-primary" type="button" onClick={handleSignup}>
+            Resgistrate
           </button>
         </div>
-      </form>
-      <p className="m-0">
-        ¿Aun no tienes cuenta?{" "}
-        <a href="/signup" className="link-primary text-end m-0">
-          Registrate aquí
-        </a>
-      </p>
+        </div>
+      </div>
     </div>
   );
 }

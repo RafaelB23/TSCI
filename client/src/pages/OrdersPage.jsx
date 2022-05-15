@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useOrders } from "../context/ordersContext";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,18 @@ import EmptyOrders from "../components/EmptyData/EmptyOrders";
 export function OrdersPage() {
   const { orders, getOrder } = useOrders();
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    const path = document.location.pathname;
+    const navUl = document.getElementById("navUl");
+    const navForm = document.getElementById("navForm");
+
+    if (path !== "/signup" || path !== "/login"  || path !== "/" ) {
+      navUl.style.visibility = "visible";
+      navForm.style.visibility = "visible";
+    }
+  })
+  
 
   if (orders.length === 0)
     return (

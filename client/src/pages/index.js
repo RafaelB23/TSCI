@@ -1,4 +1,5 @@
 export { HomePage } from './HomePage'
+export { Login } from './Login'
 export { SignUp } from './SignUp'
 export { OrdersPage } from './OrdersPage' 
 export { NewOrderPage } from './NewOrderPage'

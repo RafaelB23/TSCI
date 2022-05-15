@@ -1,23 +1,29 @@
-import { HomePage, OrdersPage, NewOrderPage, OrderPage, NotFound, SignUp } from './pages'
+import React from "react";
+import { HomePage, OrdersPage, NewOrderPage, OrderPage, NotFound, SignUp, Login } from './pages'
 import { Route, Routes } from 'react-router-dom'
 import { OrderProvider } from './context/ordersContext'
-import { NavBar } from './components'
+import { NavBar, Footer } from './components'
 import { Toaster } from 'react-hot-toast'
 
 function App() {
   return (
-    <OrderProvider>
-      <NavBar/>
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/signup' element={<SignUp />} />
-        <Route path='/ordenes' element={<OrdersPage />} />
-        <Route path='/orden' element={<NewOrderPage />} />
-        <Route path='/orden/:id' element={<OrderPage />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-      <Toaster/>
-    </OrderProvider>
+    <div className='vh-100'>
+      <OrderProvider>
+            <NavBar/>
+              <Routes>
+                <Route path='/' element={<HomePage />} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/signup' element={<SignUp />} />
+                <Route path='/ordenes' element={<OrdersPage />} />
+                <Route path='/orden' element={<NewOrderPage />} />
+                <Route path='/orden/:id' element={<OrderPage />} />
+                <Route path='*' element={<NotFound />} />
+              </Routes>
+              <Toaster/>
+              <Footer/>
+      </OrderProvider>
+    </div>
+    
   )
 }
 
