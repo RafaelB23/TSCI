@@ -1,23 +1,14 @@
-import React, { useEffect } from "react";
-// import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-export function HomePage() {
+export function SignUp() {
   const navigate = useNavigate();
-  var userState = false;
 
-  useEffect(() => {
-    if (userState) {
-      navigate("/ordenes");
-    }
-  });
   const handleSubmit = () => {
-    userState = true;
-    navigate("/ordenes");
+    navigate("/");
   };
   return (
     <div className="container col-4 mt-4 text-center">
-      <h1 className="h3 mb-3">Iniciar sesión</h1>
+      <h1 className="h3 mb-3">Registrate</h1>
       <form className="form-signin">
         <div className="form-floating">
           <input
@@ -36,16 +27,12 @@ export function HomePage() {
             placeholder="Contraseña"
           />
           <label htmlFor="floatingPassword">Contraseña</label>
-          <div className="text-end">
-            <a href="/recoverypassword" className="link-primary">
-              Recuperar contraseña
-            </a>
-          </div>
+
           <button
             onClick={handleSubmit}
             className="btn-lg btn-primary w-100 my-4"
           >
-            Iniciar sesión
+            Registrate
           </button>
         </div>
       </form>

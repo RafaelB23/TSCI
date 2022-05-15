@@ -1,4 +1,4 @@
-import { HomePage, OrdersPage, NewOrderPage, OrderPage, NotFound } from './pages'
+import { HomePage, OrdersPage, NewOrderPage, OrderPage, NotFound, SignUp } from './pages'
 import { Route, Routes } from 'react-router-dom'
 import { OrderProvider } from './context/ordersContext'
 import { NavBar } from './components'
@@ -10,6 +10,7 @@ function App() {
       <NavBar/>
       <Routes>
         <Route path='/' element={<HomePage />} />
+        <Route path='/signup' element={<SignUp />} />
         <Route path='/ordenes' element={<OrdersPage />} />
         <Route path='/orden' element={<NewOrderPage />} />
         <Route path='/orden/:id' element={<OrderPage />} />
