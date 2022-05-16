@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-
+//TO-DO Roles
 const driverSchema = new mongoose.Schema({
     name:{
         type: new mongoose.Schema({
@@ -12,6 +12,12 @@ const driverSchema = new mongoose.Schema({
     },
     mail:{
         type: String, required: true, trim: true
+    },
+    password:{
+        type: String, required: true, trim: true
+    },
+    rfc:{
+        type: String, maxlength: 13 , required: true, trim: true
     },
     address:{
         type: new mongoose.Schema({
