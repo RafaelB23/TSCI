@@ -24,11 +24,11 @@ export function HomePage() {
       >
         <h1 className="mt-4">Bienvenido</h1>
         <div className="d-flex align-items-center h-75">
-        <div class="d-grid gap-4 col-8 mx-auto">
-          <button class="btn btn-primary" type="button" onClick={handleLogin}>
+        <div className="d-grid gap-4 col-8 mx-auto">
+          <button className="btn btn-primary" type="button" onClick={handleLogin}>
             Inicia sesión
           </button>
-          <button class="btn btn-primary" type="button" onClick={handleSignup}>
+          <button className="btn btn-primary" type="button" onClick={handleSignup}>
             Resgistrate
           </button>
         </div>
