@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from 'react'
 import { createOrderRequest, deleteOrderRequest, getOrderRequest, getOrdersRequest, testOrderRequest, updateOrderRequest, deleteTmpRequest } from '../api/orders'
+import { authUser } from './authContext'
 
 export const ordersContext = createContext()
 
@@ -12,13 +13,17 @@ export const useOrders = () => {
 export const OrderProvider = ({ children }) => {
 
     const [orders, setOrders] = useState([])
+    const [user, setUser] = useState([])
 
     useEffect(() => {
         (async () => {
             const res = await getOrdersRequest()
             setOrders(res.data)
         })()
+
     }, [])
+
+    authUser()
 
     const createOrder = async (order) => {
         // console.log("res: ", order)
@@ -53,6 +58,9 @@ export const OrderProvider = ({ children }) => {
 
     return <ordersContext.Provider value={{
         orders,
+        authUser,
+        setUser,
+        user,
         createOrder,
         getOrder,
         updateOrder,

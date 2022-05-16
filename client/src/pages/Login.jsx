@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Formik, Form } from "formik";
-// import * as Yup from "yup";
+import { Formik, Form, Field } from "formik";
+import { useOrders } from "../context/ordersContext";
+import toast from "react-hot-toast";
 
 export function Login() {
   const navigate = useNavigate();
   var userState = false;
+
+  const {
+    authUser,
+    setUser
+  } = useOrders();
 
   useEffect(() => {
     if (userState) {
@@ -15,7 +21,7 @@ export function Login() {
 
   const [login, setLogin] = useState({
     mail: "",
-    password: "",
+    password: ""
   });
 
   return (
@@ -24,10 +30,19 @@ export function Login() {
         <h1 className="h3 mb-3">Iniciar sesión</h1>
         <Formik
           initialValues={login}
-          onSubmit={(values, actions) => {
+          onSubmit={ async (values, actions) => {
             setLogin(values);
-            console.log(values);
-            navigate("/ordenes");
+            toast.loading("Cargando...")
+            const res = await authUser(values)
+            toast.dismiss()
+
+            if(res.data.mail) {
+              await setUser(res.data)
+              toast.success(`Bienvenido ${res.data.name}`)
+              navigate("/ordenes");
+            }else{
+              toast.error(res.data.message)
+            }
           }}
           enableReinitialize
         >
@@ -39,24 +54,26 @@ export function Login() {
               method="post"
             >
               <div className="form-floating">
-                <input
+                <Field
                   type="email"
                   className="form-control mb-3"
-                  id="floatingInput"
+                  id="mail"
+                  name= "mail"
                   placeholder="name@example.com"
                   required
                 />
-                <label htmlFor="floatingInput">Correo Electronico</label>
+                <label htmlFor="mail">Correo Electronico</label>
               </div>
               <div className="form-floating">
-                <input
+                <Field
                   type="password"
                   className="form-control mb-3"
-                  id="floatingPassword"
+                  id="password"
+                  name= "password"
                   placeholder="Contraseña"
                   required
                 />
-                <label htmlFor="floatingPassword">Contraseña</label>
+                <label htmlFor="password">Contraseña</label>
                 <div className="text-end">
                   <a href="/recoverypassword" className="link-primary">
                     Recuperar contraseña

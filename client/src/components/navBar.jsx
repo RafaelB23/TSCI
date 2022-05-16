@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 export function NavBar() {
   useEffect(() => {
@@ -6,17 +8,19 @@ export function NavBar() {
     const navUl = document.getElementById("navUl");
     const navForm = document.getElementById("navForm");
 
-
     if (path === "/signup" || path === "/login" || path === "/") {
       navUl.style.visibility = "hidden";
       navForm.style.visibility = "hidden";
-    }else{
+    } else {
       navUl.style.visibility = "visible";
       navForm.style.visibility = "visible";
     }
   });
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary mt-auto" id="navBar">
+    <nav
+      className="navbar navbar-expand-lg navbar-dark bg-primary mt-auto"
+      id="navBar"
+    >
       <div className="container container-fluid">
         <a className="navbar-brand" href="/">
           TSCI
@@ -90,7 +94,7 @@ export function NavBar() {
                 aria-label="Search"
               />
               <button className="btn btn-outline-light" type="submit">
-                Buscar
+                <FontAwesomeIcon icon={faMagnifyingGlass} size="1x" />
               </button>
             </form>
           </div>

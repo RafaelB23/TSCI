@@ -16,6 +16,14 @@ export function SignUp() {
     mail: "",
     password: "",
     cpassword: "",
+    address: {
+      street: "",
+      streetNum: "",
+      cp: "",
+      city: "",
+      state: "",
+    },
+    profile_img: "",
   });
 
   return (
@@ -53,25 +61,24 @@ export function SignUp() {
                 <div className="form-floating w-50">
                   <Field
                     type="text"
-                    className="form-control mb-3"
+                    className="form-control mb-0"
                     id="floatinglastM"
                     name="lastname.paternal"
                     placeholder="Apellido materno"
-                    required
                   />
                   <label htmlFor="floatinglastM">Apellido materno</label>
                 </div>
                 <div className="form-floating w-50">
                   <Field
                     type="text"
-                    className="form-control mb-3"
+                    className="form-control mb-0"
                     id="floatinglastP"
                     name="lastname.maternal"
                     placeholder="name@example.com"
-                    required
                   />
                   <label htmlFor="floatinglastP">Apellido paterno</label>
                 </div>
+                <div className="form-text text-start mb-3">Si estas te estas registrando como empresa, omite los campos de apellidos*</div>
               </div>
               <div className="form-floating">
                 <Field
@@ -117,6 +124,66 @@ export function SignUp() {
                 />
                 <label htmlFor="floatingCPassword">Confirmar contraseña</label>
               </div>
+              <div className="form-floating border-bottom mb-3">
+                <p className="form-text fs-4 m-2 text-start">Dirección</p>
+              </div>
+              <div className="input-group w-100">
+                <div className="form-floating w-75">
+                  <Field
+                    type="text"
+                    className="form-control mb-3"
+                    id="floatingStreet"
+                    name="address.street"
+                    placeholder="Calle"
+                    required
+                  />
+                  <label htmlFor="floatingStreet">Calle</label>
+                </div>
+                <div className="form-floating w-25">
+                  <Field
+                    type="text"
+                    className="form-control mb-3"
+                    id="floatingStreetNum"
+                    name="address.streetNum"
+                    placeholder="N°"
+                    required
+                  />
+                  <label htmlFor="floatingStreet">N°</label>
+                </div>
+              </div>
+              <div className="form-floating">
+                  <Field
+                    type="text"
+                    className="form-control mb-3"
+                    id="floatingCP"
+                    name="address.cp"
+                    placeholder="CP"
+                    required
+                  />
+                  <label htmlFor="floatingCP">CP</label>
+                </div>
+                <div className="form-floating">
+                  <Field
+                    type="text"
+                    className="form-control mb-3"
+                    id="floatingCity"
+                    name="address.city"
+                    placeholder="Ciudad"
+                    required
+                  />
+                  <label htmlFor="floatingCity">Ciudad</label>
+                </div>
+                <div className="form-floating">
+                  <Field
+                    type="text"
+                    className="form-control mb-3"
+                    id="floatingState"
+                    name="address.state"
+                    placeholder="Estado"
+                    required
+                  />
+                  <label htmlFor="floatingState">Estado</label>
+                </div>
               <button type="submit" className="btn-lg btn-primary w-100 my-4">
                 Registrate
               </button>
