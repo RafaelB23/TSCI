@@ -14,7 +14,6 @@ function App() {
   return (
     <div className='vh-100'>
       <OrderProvider> 
-        <DriverProvider>
             <NavBar/>
               <Routes>
                 <Route path='/' element={<HomePage />} />
@@ -35,11 +34,10 @@ function App() {
                 <Route path='*' element={<NotFound />} />
               </Routes>
               <Toaster/>
-              <Footer/></DriverProvider>
+              <Footer/>
       </OrderProvider>
     </div>
-    
-  )
+  );
 }
 
-export default App    
+export default App;

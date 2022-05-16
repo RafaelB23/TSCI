@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import EmptyOrders from "../components/EmptyData/EmptyOrders";
 
 export function OrdersPage() {
-  const { orders, getOrder } = useOrders();
+  const { orders, getOrder, user } = useOrders();
   const navigate = useNavigate();
 
   useEffect(()=>{
+    console.log(user);  
+
     const path = document.location.pathname;
     const navUl = document.getElementById("navUl");
     const navForm = document.getElementById("navForm");
