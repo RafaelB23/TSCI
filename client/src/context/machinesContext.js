@@ -23,6 +23,7 @@ export const MachineProvider = ({ children }) => {
     const createMachine = async (machine) => {
         const res = await createMachineRequest(machine)
         setMachines([...machines, res.data])
+        return res
     }
 
     const getMachine = async (machineId) => {

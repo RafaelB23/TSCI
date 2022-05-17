@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useOrders } from "../context/ordersContext";
 import { useNavigate } from "react-router-dom";
 import EmptyOrders from "../components/EmptyData/EmptyOrders";
+import StatusOrder from '../components/statusOrder'
 
 export function OrdersPage() {
   const { orders, getOrder/* , user */ } = useOrders();
@@ -48,9 +49,10 @@ export function OrdersPage() {
           <thead>
             <tr>
               <th scope="col">id</th>
-              <th scope="col">Cliente</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">No. Piezas</th>
+              <th className="text-end" scope="col">Cliente</th>
+              <th className="text-end" scope="col">Descripcion</th>
+              <th className="text-end" scope="col">No. Piezas</th>
+              <th className="text-end" scope="col">Estado del pedido</th>
             </tr>
           </thead>
           <tbody>
@@ -65,9 +67,10 @@ export function OrdersPage() {
                   }}
                 >
                   <td>{order._id}</td>
-                  <td>{order.owner}</td>
-                  <td className="text-break">{order.description.specs}</td>
+                  <td className="text-end">{order.owner}</td>
+                  <td className="text-break text-end">{order.description.specs}</td>
                   <td className="text-end">{order.description.no_pieces}</td>
+                  <td className="text-end"> <StatusOrder value={order.status}/> </td>
                 </tr>
               ))
               .reverse()}
@@ -77,3 +80,11 @@ export function OrdersPage() {
     </div>
   );
 }
+
+/* if(order.status === 0){
+  <span className="badge rounded-pill bg-warning text-dark">Pendiente</span>
+}else if(order.status === 1){
+  <span className="badge rounded-pill bg-success">Lista</span>
+}else{
+  <span className="badge rounded-pill bg-danger">Cancelada</span>
+} */

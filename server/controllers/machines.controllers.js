@@ -21,10 +21,10 @@ export const getMachine = async (req, res) => {
 
 export const createMachine = async (req, res) => {
   try {
-    const { description, area } = req.body;
-    const newMachine = new Machine({ description, area });
+    const { noMachine, costHour, area } = req.body;
+    const newMachine = new Machine({ noMachine, costHour, area });
     const machine = await Machine.find({
-        description: newMachine.description
+        noMachine: newMachine.noMachine
     });
     if(machine.length!==0){
       throw new Error('Es posible que ya exista')
@@ -33,7 +33,7 @@ export const createMachine = async (req, res) => {
     }
     return res.json(newMachine);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.send(error.message);
   }
 };
 
@@ -47,7 +47,7 @@ export const updateMachine = async (req, res) => {
     console.log("Actualizada");
     return res.send(updatedMachine);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.send(error.message);
   }
 };
 

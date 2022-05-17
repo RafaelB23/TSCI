@@ -5,8 +5,7 @@ import {
   NewSite, Plantas,Machines, NewBill, Inventory, NewPiece
 } from './pages'
 import { Route, Routes } from 'react-router-dom'
-import { OrderProvider } from './context/ordersContext'
-import { DriverProvider } from './context/driversContext'
+import { OrderProvider, DriverProvider, MachineProvider } from "./Context";
 import { NavBar, Footer } from './components'
 import { Toaster } from 'react-hot-toast'
 
@@ -14,7 +13,8 @@ function App() {
   return (
     <div className='vh-100'>
       <OrderProvider> 
-      <DriverProvider>
+        <DriverProvider>
+          <MachineProvider>
             <NavBar/>
               <Routes>
                 <Route path='/' element={<HomePage />} />
@@ -36,7 +36,8 @@ function App() {
               </Routes>
               <Toaster/>
               <Footer/>
-              </DriverProvider>
+          </MachineProvider>
+        </DriverProvider>
       </OrderProvider>
     </div>
   );

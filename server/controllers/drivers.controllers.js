@@ -30,22 +30,26 @@ export const createDriver = async (req, res) => {
         "profile_img":""
     }
     try {
-        const { name, phone_number, mail, address, hiring_date, employment, salary_hour } = req.body
-        let profile_img
-        if(req.files?.profile_img){
-            const result = await uplaodImage(req.files.profile_img.tempFilePath)
-            await fs.remove(req.files.profile_img.tempFilePath)
-            profile_img = {
-                url: result.secure_url,
-                public_id: result.public_id
+        const driverExist = await Driver.findOne({mail: req.body.mail})
+        if(!driverExist){
+            const { name, phone_number, mail, rfc, address, hiring_date, employment, salary_hour } = req.body
+            let profile_img
+            if(req.files?.profile_img){
+                const result = await uplaodImage(req.files.profile_img.tempFilePath)
+                await fs.remove(req.files.profile_img.tempFilePath)
+                profile_img = {
+                    url: result.secure_url,
+                    public_id: result.public_id
+                }
             }
+            const newDriver = new Driver({ name, phone_number, mail, rfc, address, hiring_date, employment, salary_hour, profile_img })
+            await newDriver.save()
+            return res.json(newDriver)
+        }else{
+            throw new Error("El correo ya esta registrado")
         }
-        const newDriver = new Driver({ name, phone_number, mail, address, hiring_date, employment, salary_hour, profile_img })
-        await newDriver.save()
-        return res.json(newDriver)
     } catch (error) {
-        console.log(error)
-        return res.status(500).json({message: error.message})
+        return res.send(error.message)
     }
 }
 export const updateDriver = async (req, res) => {

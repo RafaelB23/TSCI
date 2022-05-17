@@ -14,7 +14,7 @@ const driverSchema = new mongoose.Schema({
         type: String, required: true, trim: true
     },
     password:{
-        type: String, required: true, trim: true
+        type: String, required: true, trim: true, default: "password"
     },
     rfc:{
         type: String, maxlength: 13 , required: true, trim: true
@@ -34,7 +34,7 @@ const driverSchema = new mongoose.Schema({
         type: String, required: true, trim: true
     },
     salary_hour:{
-        type: Number, required: true
+        type: Number
     },
     profile_img:{
         public_id: String,
