@@ -1,12 +1,18 @@
 import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { useOrders } from "../context/ordersContext";
+import { useNavigate } from "react-router-dom";
 
 export function NavBar() {
+  const navigate = useNavigate();
+
+  const { user } = useOrders();
   useEffect(() => {
     const path = document.location.pathname;
     const navUl = document.getElementById("navUl");
     const navForm = document.getElementById("navForm");
+    // const refNav = document.getElementById("refInicio");
 
     if (path === "/signup" || path === "/login" || path === "/") {
       navUl.style.visibility = "hidden";
@@ -22,9 +28,20 @@ export function NavBar() {
       id="navBar"
     >
       <div className="container container-fluid">
-        <a className="navbar-brand" href="/">
+        <p
+          type="button"
+          className="navbar-brand m-0 p-0 pe-3"
+          id="refInicio"
+          onClick={() => {
+            if (user.length !== 0) {
+              navigate("/ordenes")
+            } else {
+              navigate("/")
+            }
+          }}
+        >
           TSCI
-        </a>
+        </p>
         <button
           className="navbar-toggler"
           type="button"

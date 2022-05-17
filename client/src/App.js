@@ -14,6 +14,7 @@ function App() {
   return (
     <div className='vh-100'>
       <OrderProvider> 
+      <DriverProvider>
             <NavBar/>
               <Routes>
                 <Route path='/' element={<HomePage />} />
@@ -35,6 +36,7 @@ function App() {
               </Routes>
               <Toaster/>
               <Footer/>
+              </DriverProvider>
       </OrderProvider>
     </div>
   );

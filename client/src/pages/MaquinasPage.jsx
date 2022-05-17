@@ -50,7 +50,7 @@ return (
         </table>
       </div>
       <div className="d-flex justify-content-center">
-        <button class="btn btn-primary" type="button" onClick={handleMachine}>
+        <button className="btn btn-primary" type="button" onClick={handleMachine}>
         Registrar Nueva Maquina
         </button>
       </div>

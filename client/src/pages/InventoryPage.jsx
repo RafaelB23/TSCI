@@ -48,7 +48,7 @@ return (
         </table>
       </div>
       <div className="d-flex justify-content-center">
-        <button class="btn btn-primary" type="button" onClick={handlePart}>
+        <button className="btn btn-primary" type="button" onClick={handlePart}>
         Registrar Articulo
         </button>
       </div>

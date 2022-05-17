@@ -5,11 +5,14 @@ import { useNavigate } from "react-router-dom";
 import EmptyOrders from "../components/EmptyData/EmptyOrders";
 
 export function OrdersPage() {
-  const { orders, getOrder, user } = useOrders();
+  const { orders, getOrder/* , user */ } = useOrders();
   const navigate = useNavigate();
 
   useEffect(()=>{
-    console.log(user);  
+
+    // if(user.length === 0){
+    //   navigate("/login")
+    // }
 
     const path = document.location.pathname;
     const navUl = document.getElementById("navUl");
@@ -56,7 +59,7 @@ export function OrdersPage() {
                 <tr
                   key={order._id}
                   role="button"
-                  onClick={async () => {
+                  onClick={async () => {                    
                     await getOrder(order._id)
                     navigate('/orden/' + order._id)
                   }}

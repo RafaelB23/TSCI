@@ -1,52 +1,83 @@
 import { createContext, useState, useContext, useEffect } from 'react'
-import { createDriverRequest, deleteDriverRequest, getDriverRequest, getDriversRequest, updateDriverRequest } from '../api/drivers'
+import { createOrderRequest, deleteOrderRequest, getOrderRequest, getOrdersRequest, testOrderRequest, updateOrderRequest, deleteTmpRequest } from '../api/orders'
+import { authUser } from './authContext'
 
-export const driversContext = createContext()
+// import { createDriver, getDriver, updateDriver, deleteDriver, getDrivers} from './driversContext'
 
-export const useDrivers = () => {
-    const context = useContext(driversContext)
-    if (!context) throw new Error("Driver data is missing");
+export const driverContext = createContext()
+
+export const useOrders = () => {
+    const context = useContext(driverContext)
+    if (!context) throw new Error("Order Provider is missing");
     return context
 }
 
 export const DriverProvider = ({ children }) => {
 
-    const [drivers, setDrivers] = useState([])
+    const [orders, setOrders] = useState([])
+    const [user, setUser] = useState([])
+    // const [drivers, setDrivers] = useState([])
+
 
     useEffect(() => {
         (async () => {
-            const res = await getDriversRequest()
-            setDrivers(res.data)
+            const res = await getOrdersRequest()
+            setOrders(res.data)
         })()
+
     }, [])
 
-    const createDriver = async (driver) => {
-        const res = await createDriverRequest(driver)
-        setDrivers([...drivers, res.data])
+    authUser()
+
+    const createOrder = async (order) => {
+        // console.log("res: ", order)
+        const res = await createOrderRequest(order)
+        setOrders([...orders, res.data])
+        return res
     }
 
-    const getDriver = async (driverId) => {
-        const res = await getDriverRequest(driverId)
+    const getOrder = async (orderId) => {
+        const res = await getOrderRequest(orderId)
         return res.data
     }
 
-    const updateDriver = async (driverId, driver) => {
-        const res = await updateDriverRequest(driverId, driver)
-        setDrivers(drivers.map((driver) => (driver._id === driverId ? res.data : driver)))
+    const testOrder = async (testFiles) => {
+        const res = await testOrderRequest(testFiles)
+        return res
     }
 
-    const deleteDriver = async (driverId) => {
-        await deleteDriverRequest(driverId)
-        setDrivers(drivers.filter((driver) => driver._id !== driverId))
+    const deleteTmp = async (tmpId) => {
+        await deleteTmpRequest(tmpId)
     }
 
-    return <driversContext.Provider value={{
-        drivers,
-        createDriver,
-        getDriver,
-        updateDriver,
-        deleteDriver
+    const updateOrder = async (orderId, order) => {
+        const res = await updateOrderRequest(orderId, order)
+        setOrders(orders.map((order) => (order._id === orderId ? res.data : order)))
+    }
+
+    const deleteOrder = async (orderId) => {
+        await deleteOrderRequest(orderId)
+        setOrders(orders.filter((order) => order._id !== orderId))
+    }
+
+    return <driverContext.Provider value={{
+        orders,
+        createOrder,
+        getOrder,
+        updateOrder,
+        deleteOrder,
+        testOrder,
+        deleteTmp,
+        user,
+        authUser,
+        setUser,
+        // drivers,
+        // createDriver,
+        // getDriver,
+        // getDrivers,
+        // updateDriver,
+        // deleteDriver
     }}>
         {children}
-    </driversContext.Provider>
+    </driverContext.Provider>
 }

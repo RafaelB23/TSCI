@@ -47,7 +47,7 @@ return (
         </table>
       </div>
       <div className="d-flex justify-content-center">
-        <button class="btn btn-primary" type="button" onClick={handleSite}>
+        <button className="btn btn-primary" type="button" onClick={handleSite}>
         Registrar Nueva Planta
         </button>
       </div>
