@@ -38,7 +38,7 @@ export function NewMachine() {
             {({ handleSubmit }) => (
               <Form
                 onSubmit={handleSubmit}
-                className="form-signin col-lg-5 m-auto"
+                className="form-signin col-lg-4 m-auto"
                 encType="multipart/form-data"
                 method="post"
               >

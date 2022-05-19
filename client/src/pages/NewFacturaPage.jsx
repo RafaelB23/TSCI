@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
+import { navDetector } from '../components/navConfiguration';
 //import { use } from "../context/";
     
 export function NewBill() {
     const navigate = useNavigate();
+    useEffect(()=>{
+      navDetector("facturas")
+    })
     /*const [drivers, setDriver] = useDrivers({
       name: {
         first_name: "",
@@ -27,7 +31,7 @@ export function NewBill() {
   
     return (
       <div>
-        <div className="container col-4 mt-4 text-center">
+        <div className="container-sm col-lg-4 mt-4 text-center">
           <h1 className="h3 mb-3">Registro de Maquina</h1>
           <Formik
             //initialValues={drivers}

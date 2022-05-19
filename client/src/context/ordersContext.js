@@ -70,13 +70,7 @@ export const OrderProvider = ({ children }) => {
         deleteTmp,
         user,
         authUser,
-        setUser,
-        // drivers,
-        // createDriver,
-        // getDriver,
-        // getDrivers,
-        // updateDriver,
-        // deleteDriver
+        setUser
     }}>
         {children}
     </ordersContext.Provider>

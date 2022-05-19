@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { navDetector } from "../components/navConfiguration";
 import { useMachines } from "../context/machinesContext";
 
 export function Machines() {
   //const { drivers, getDriver } = useDrivers();
+  useEffect(() => {
+    navDetector("maquinaria", true);
+  });
   const { machines, getMachine } = useMachines();
   const navigate = useNavigate();
   const handleMachine = () => {
@@ -14,6 +18,15 @@ export function Machines() {
       <div className="mt-4">
         <h1 className="text-center">Maquinas</h1>
       </div>
+      <div className="d-flex justify-content-center">
+        <button
+          className="btn btn-primary mt-2"
+          type="button"
+          onClick={handleMachine}
+        >
+          Registrar Nueva Maquina
+        </button>
+      </div>
       <div
         className="overflow-auto border border-ligth mt-4 p-3"
         style={{ height: "50vh" }}
@@ -22,19 +35,23 @@ export function Machines() {
           <thead>
             <tr>
               <th scope="col">id</th>
-              <th className="text-end" scope="col">No° de maquina</th>
-              <th className="text-end" scope="col">Area</th>
+              <th className="text-end" scope="col">
+                No° de maquina
+              </th>
+              <th className="text-end" scope="col">
+                Area
+              </th>
             </tr>
           </thead>
-          <tbody>  
+          <tbody>
             {machines
               .map((machine) => (
                 <tr
                   key={machine._id}
                   role="button"
                   onClick={async () => {
-                    await getMachine(machine._id)
-                    navigate('/usuario/' + machine._id)
+                    await getMachine(machine._id);
+                    navigate("/usuario/" + machine._id);
                   }}
                 >
                   <td>{machine._id}</td>
@@ -45,15 +62,6 @@ export function Machines() {
               .reverse()}
           </tbody>
         </table>
-      </div>
-      <div className="d-flex justify-content-center">
-        <button
-          className="btn btn-primary"
-          type="button"
-          onClick={handleMachine}
-        >
-          Registrar Nueva Maquina
-        </button>
       </div>
     </div>
   );

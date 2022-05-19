@@ -5,6 +5,7 @@ import driversRoutes from './routes/drivers.routes.js'
 import machinesRoutes from './routes/machines.routes.js'
 import usersRoutes from './routes/users.routes.js'
 import authRoutes from './routes/auth.routes.js'
+import sucursalesRoutes from './routes/sucursal.routes.js'
 
 const app = express()
 
@@ -18,5 +19,6 @@ app.use(driversRoutes)
 app.use(usersRoutes)
 app.use(authRoutes)
 app.use(machinesRoutes)
+app.use(sucursalesRoutes)
 
 export default app

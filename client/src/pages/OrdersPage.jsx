@@ -4,6 +4,7 @@ import { useOrders } from "../context/ordersContext";
 import { useNavigate } from "react-router-dom";
 import EmptyOrders from "../components/EmptyData/EmptyOrders";
 import StatusOrder from '../components/statusOrder'
+import { navDetector } from "../components/navConfiguration";
 
 export function OrdersPage() {
   const { orders, getOrder/* , user */ } = useOrders();
@@ -14,6 +15,8 @@ export function OrdersPage() {
     // if(user.length === 0){
     //   navigate("/login")
     // }
+
+    navDetector("ordenes")
 
     const path = document.location.pathname;
     const navUl = document.getElementById("navUl");
@@ -34,7 +37,7 @@ export function OrdersPage() {
   return (
     <div className="container">
       <div className="mt-4">
-        <h1 className="text-center">Orders Page</h1>
+        <h1 className="text-center">Listado de ordenes</h1>
       </div>
       <div className="d-flex justify-content-center">
         <Link to={"/orden"} className="btn btn-primary mt-2">
@@ -48,17 +51,19 @@ export function OrdersPage() {
         <table className="table table-ligth table-hover fs-6">
           <thead>
             <tr>
-              <th scope="col">id</th>
-              <th className="text-end" scope="col">Cliente</th>
-              <th className="text-end" scope="col">Descripcion</th>
-              <th className="text-end" scope="col">No. Piezas</th>
-              <th className="text-end" scope="col">Estado del pedido</th>
+              <th className="text-start text-nowrap" scope="col">Estado del pedido</th>
+              <th className="text-end text-nowrap" scope="col">Cliente</th>
+              <th className="text-end text-nowrap" scope="col">Descripcion</th>
+              <th className="text-end text-nowrap" scope="col">No. Piezas</th>
+              <th className="text-end" scope="col">id</th>
             </tr>
           </thead>
           <tbody>
             {orders
-              .map((order) => (
-                <tr
+              .map((order) => {
+                if(order.status !== "1"){
+                  return (
+                    <tr
                   key={order._id}
                   role="button"
                   onClick={async () => {                    
@@ -66,13 +71,15 @@ export function OrdersPage() {
                     navigate('/orden/' + order._id)
                   }}
                 >
-                  <td>{order._id}</td>
+                  <td className="text-start"> <StatusOrder value={order.status}/> </td>
                   <td className="text-end">{order.owner}</td>
                   <td className="text-break text-end">{order.description.specs}</td>
                   <td className="text-end">{order.description.no_pieces}</td>
-                  <td className="text-end"> <StatusOrder value={order.status}/> </td>
+                  <td className="text-end">{order._id}</td>
                 </tr>
-              ))
+                  )
+                } return null
+              })
               .reverse()}
           </tbody>
         </table>

@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { navDetector } from "../components/navConfiguration";
 import { useDrivers } from "../context/driversContext";
 
 export function Emplpyees() {
   const { drivers, getDriver } = useDrivers();
+
+  useEffect(()=>{
+    navDetector("operadores", true)
+  })
 
   const navigate = useNavigate();
 
@@ -16,8 +21,17 @@ export function Emplpyees() {
       <div className="mt-4">
         <h1 className="text-center">Operadores</h1>
       </div>
+      <div className="d-flex justify-content-center mt-2">
+        <button
+          className="btn btn-primary"
+          type="button"
+          onClick={handleNewEmpl}
+        >
+          Registrar Nuevo Operador
+        </button>
+      </div>
       <div
-        className="overflow-auto border border-ligth mt- p-3 m-auto"
+        className="overflow-auto border border-ligth mt-4 p-3 m-auto"
         style={{ height: "50vh" }}
       >
         <table className="table table-ligth table-hover fs-6">
@@ -50,15 +64,7 @@ export function Emplpyees() {
           </tbody>
         </table>
       </div>
-      <div className="d-flex justify-content-center mt-4">
-        <button
-          className="btn btn-primary"
-          type="button"
-          onClick={handleNewEmpl}
-        >
-          Registrar Nuevo Operador
-        </button>
-      </div>
+      
     </div>
   );
 }

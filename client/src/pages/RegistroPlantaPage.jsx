@@ -1,40 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
+import { useSucursales } from '../context/sucursalContext';
+import toast from 'react-hot-toast';
 //import { use } from "../context/";
     
 export function NewSite() {
     const navigate = useNavigate();
-    /*const [drivers, setDriver] = useDrivers({
-      name: {
-        first_name: "",
-        last_name: "",
+    const { createSucursal } = useSucursales()
+    const [site, setSite] = useState({
+      name: "",
+      address: {
+        street: "",
+        cp: "",
+        city: "",
+        state: ""
       },
-      phone_number: "",
-      mail: "",
-      password:"",
-      employment:"",
-      salary_hour:"",
-      rfc:"",
-      hiring_date:"",
-      address:{
-        street:"",
-        cp:"",
-        city:"",
-        state:""
-      }
-    });*/
+      phone_number: ""
+    });
   
     return (
       <div>
-        <div className="container col-4 mt-4 text-center">
-          <h1 className="h3 mb-3">Registro de Operador</h1>
+        <div className="container-sm col-lg-4 mt-4 text-center">
+          <h1 className="h3 mb-3">Registro de sucursal</h1>
           <Formik
-            //initialValues={drivers}
-            onSubmit={(values, actions) => {
-              //setDriver(values);
+            initialValues={site}
+            onSubmit={async (values, actions) => {
               console.log(values);
-              navigate("/plantas");
+              toast.loading("Cargando...")
+              const res = await createSucursal(values)
+              toast.dismiss()
+              if(typeof res.data === "string"){
+                toast.error(res.data)
+              }else{
+                setSite(values)
+                toast.success("La sucursal se registro exitosamente")
+                navigate("/plantas");
+              }
             }}
             enableReinitialize
           >
@@ -46,6 +48,17 @@ export function NewSite() {
                 method="post"
               >
 
+                <div className="form-floating w-30">
+                    <Field
+                      type="text"
+                      className="form-control mb-3"
+                      id="floatingInput"
+                      name="name"
+                      placeholder="Identificador"
+                      required
+                    />
+                    <label htmlFor="floatingInput">Nombre de la sucursal</label>
+                </div>
                 <div className="form-floating w-30">
                     <Field
                       type="text"

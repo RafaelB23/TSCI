@@ -69,7 +69,7 @@ export function FormOrder() {
   };
 
   return (
-    <div className="container-sm col-6">
+    <div className="container-sm col-lg-4">
       <Formik
         initialValues={order}
         validationSchema={Yup.object({
