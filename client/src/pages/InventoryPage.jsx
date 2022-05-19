@@ -10,7 +10,7 @@ export function Inventory(){
 return (
     <div className="container">
       <div className="mt-4">
-        <h1 className="text-center">Plantas</h1>
+        <h1 className="text-center">Inventario</h1>
       </div>
       <div
         className="overflow-auto border border-ligth mt-4 p-3"
@@ -19,32 +19,26 @@ return (
         <table className="table table-ligth table-hover fs-6">
           <thead> 
             <tr>
-              <th scope="col">id</th>
               <th scope="col">No. Pieza</th>
+              <th scope="col">Articulo</th>
               <th scope='col'>Cantidad</th>
               <th scope="col">Nota</th>
               <th scope="col">Planta</th>
             </tr>
           </thead>
-           {/*<tbody>  
-            {drivers
-              .map((user) => (
+           <tbody>  
+            
                 <tr
-                  key={user._id}
-                  role="button"
-                  onClick={async () => {
-                    await getDriver(user._id)
-                    navigate('/usuario/' + user._id)
-                  }}
                 >
-                  <td>{user._id}</td>
-                  <td>{user.name}</td>
-                  <td className="text-break">{user.mail}</td>
-                  <td className="text-end">{user.employment}</td>
+                  <td>013456</td>
+                  <td>Tubo de Cobre</td>
+                  <td className="text-break">200</td>
+                  <td >Tubo de 3/4 pulgadas</td>
+                  <td className="text-end">Centro</td>
                 </tr>
-              ))
-              .reverse()}
-          </tbody>*/}
+              
+              
+          </tbody>
         </table>
       </div>
       <div className="d-flex justify-content-center">

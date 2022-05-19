@@ -1,8 +1,8 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
-import { useDrivers } from "../context/driversContext";
+//import { useDrivers } from "../context/driversContext";
 export function Emplpyees(){
-    const { drivers, getDriver } = useDrivers();
+    //const { drivers, getDriver } = useDrivers();
     const navigate = useNavigate()
     const handleNewEmpl=(()=>{
         navigate("/operador");
@@ -22,28 +22,25 @@ return (
               <th scope="col">id</th>
               <th scope="col">Nombre</th>
               <th scope='col'>Email</th>
+              <th scope="col">Nivel</th>
               <th scope="col">Puesto</th>
+              <th scope="col">Area</th>
             </tr>
           </thead>
-           {/*<tbody>  
-            {drivers
-              .map((user) => (
+          <tbody>  
+            
                 <tr
-                  key={user._id}
-                  role="button"
-                  onClick={async () => {
-                    await getDriver(user._id)
-                    navigate('/usuario/' + user._id)
-                  }}
                 >
-                  <td>{user._id}</td>
-                  <td>{user.name}</td>
-                  <td className="text-break">{user.mail}</td>
-                  <td className="text-end">{user.employment}</td>
+                  <td>056</td>
+                  <td>Christopher</td>
+                  <td >chsg@example.com</td>
+                  <td>Administrador</td>
+                  <td className="text-break">Tornalero</td>
+                  <td className="text-end">Maquina 4</td>
                 </tr>
-              ))
-              .reverse()}
-          </tbody>*/}
+              
+              
+          </tbody>
         </table>
       </div>
       <div className="d-flex justify-content-center">

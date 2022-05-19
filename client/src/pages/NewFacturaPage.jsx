@@ -28,7 +28,7 @@ export function NewBill() {
     return (
       <div>
         <div className="container col-4 mt-4 text-center">
-          <h1 className="h3 mb-3">Registro de Maquina</h1>
+          <h1 className="h3 mb-3">Registro de Factura</h1>
           <Formik
             //initialValues={drivers}
             onSubmit={(values, actions) => {
