@@ -3,7 +3,7 @@ Proyecto MERN de seguimiento de producción
 
 
 ## ✍️ Faltantes:
-- [ ] Register/Login `Backend y frondend`
+- [X] Register/Login `Backend y frondend`
 - [ ] Backend y frontend para sucursales
 - [ ] Cambiar el esquema de Order para incluir 
   - [ ] Sucursal `Dropdown con barra de busqueda`
