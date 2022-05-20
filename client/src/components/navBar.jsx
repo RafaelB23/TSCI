@@ -19,7 +19,9 @@ export function NavBar() {
       navForm.style.visibility = "hidden";
       document.getElementById("btnMenu").style.visibility = "hidden"
       document.getElementById("navUser").style.visibility = "hidden"
+      document.getElementById("navUser").classList.remove("disable")
     } else {
+      document.getElementById("navUser").classList.add("disable")
       navUl.style.visibility = "visible";
       navForm.style.visibility = "visible";
       document.getElementById("btnMenu").style.visibility = "visible"
