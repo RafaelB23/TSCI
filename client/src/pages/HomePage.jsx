@@ -1,37 +1,45 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useOrders } from "../context/ordersContext";
 
 export function HomePage() {
+  const { user } = useOrders();
   const navigate = useNavigate();
-  var userState = false;
+
+  console.log("User is: ", user);
 
   useEffect(() => {
-    if (userState) {
+    if (user.length !== 0) {
       navigate("/ordenes");
     }
   });
-  const handleLogin=(()=>{
+  const handleLogin = () => {
     navigate("/login");
-  })
-  const handleSignup=(()=>{
+  };
+  const handleSignup = () => {
     navigate("/signup");
-  })
+  };
   return (
     <div className="d-flex flex-column h-75 align-items-center justify-content-center">
-      <div
-        className="container text-center m-auto g-5 h-100"
-        style={{ width: "30%" }}
-      >
-        <h1 className="mt-4">Bienvenido</h1>
-        <div className="d-flex align-items-center h-75">
-        <div className="d-grid gap-4 col-8 mx-auto">
-          <button className="btn btn-primary" type="button" onClick={handleLogin}>
+      <h1 className="mt-4">Bienvenido</h1>
+      <div className="container-sm text-center m-auto">
+        <div className="col-md-5 m-auto">
+          <button
+            className="btn-lg btn-primary w-100 mb-4"
+            type="button"
+            onClick={handleLogin}
+          >
             Inicia sesión
           </button>
-          <button className="btn btn-primary" type="button" onClick={handleSignup}>
+        </div>
+        <div className="col-md-5 m-auto">
+          <button
+            className="btn-lg btn-primary w-100"
+            type="button"
+            onClick={handleSignup}
+          >
             Resgistrate
           </button>
-        </div>
         </div>
       </div>
     </div>

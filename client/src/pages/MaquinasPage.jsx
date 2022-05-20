@@ -1,18 +1,31 @@
-import React from 'react'
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-//import {  } from "../context/";
-    
+import { navDetector } from "../components/navConfiguration";
+import { useMachines } from "../context/machinesContext";
 
-export function Machines(){
-    //const { drivers, getDriver } = useDrivers();
-    const navigate = useNavigate()
-    const handleMachine=(()=>{
-        navigate("/maquina");
-      }) 
-return (
+export function Machines() {
+  //const { drivers, getDriver } = useDrivers();
+  useEffect(() => {
+    navDetector("maquinaria", true);
+  });
+  const { machines, getMachine } = useMachines();
+  const navigate = useNavigate();
+  const handleMachine = () => {
+    navigate("/maquina");
+  };
+  return (
     <div className="container">
       <div className="mt-4">
         <h1 className="text-center">Maquinas</h1>
+      </div>
+      <div className="d-flex justify-content-center">
+        <button
+          className="btn btn-primary mt-2"
+          type="button"
+          onClick={handleMachine}
+        >
+          Registrar Nueva Maquina
+        </button>
       </div>
       <div
         className="overflow-auto border border-ligth mt-4 p-3"
@@ -21,34 +34,35 @@ return (
         <table className="table table-ligth table-hover fs-6">
           <thead>
             <tr>
-              <th scope='col'>id</th>
-              <th scope="col">Codigo</th>
-              <th scope="col">Costo</th>
-              <th scope='col'>Costo Mano de Obra</th>
-              <th scope="col">Tiempo por Pieza</th>
+              <th scope="col">id</th>
+              <th className="text-end" scope="col">
+                No° de maquina
+              </th>
+              <th className="text-end" scope="col">
+                Area
+              </th>
             </tr>
           </thead>
-          <tbody>  
-            
-            <tr
-            >
-              <td>156</td>
-              <td>3242</td>
-              <td >12</td>
-              <td className="text-break">25</td>
-              <td >2 min</td>
-            </tr>
-          
-          
-      </tbody>
+          <tbody>
+            {machines
+              .map((machine) => (
+                <tr
+                  key={machine._id}
+                  role="button"
+                  onClick={async () => {
+                    await getMachine(machine._id);
+                    navigate("/usuario/" + machine._id);
+                  }}
+                >
+                  <td>{machine._id}</td>
+                  <td className="text-end">{machine.noMachine}</td>
+                  <td className="text-end">{machine.area}</td>
+                </tr>
+              ))
+              .reverse()}
+          </tbody>
         </table>
       </div>
-      <div className="d-flex justify-content-center">
-        <button class="btn btn-primary" type="button" onClick={handleMachine}>
-        Registrar Nueva Maquina
-        </button>
-      </div>
     </div>
-        
-);
+  );
 }

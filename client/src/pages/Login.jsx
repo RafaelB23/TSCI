@@ -6,15 +6,21 @@ import toast from "react-hot-toast";
 
 export function Login() {
   const navigate = useNavigate();
-  var userState = false;
 
   const {
+    user,
     authUser,
     setUser
   } = useOrders();
 
   useEffect(() => {
-    if (userState) {
+    const navUl = document.getElementById("navUl");
+    const navForm = document.getElementById("navForm");
+
+    navUl.style.visibility = "hidden";
+    navForm.style.visibility = "hidden";
+    
+    if (user.length !== 0) { // Validado mientras programo
       navigate("/ordenes");
     }
   });
@@ -25,10 +31,15 @@ export function Login() {
   });
 
   return (
-    <div className="d-flex align-items-center h-100">
-      <div className="container col-4 text-center mx-auto">
-        <h1 className="h3 mb-3">Iniciar sesión</h1>
-        <Formik
+    <div className="d-flex flex-column align-items-center h-75">
+      <div className="container-sm text-center mx-auto">
+        <h1 className="h3 mt-3">Iniciar sesión</h1>
+        
+      </div>
+      <div className="container text-center m-auto">
+        <div className="row justify-content-md-center">
+          <div className="col-lg-4">
+          <Formik
           initialValues={login}
           onSubmit={ async (values, actions) => {
             setLogin(values);
@@ -92,7 +103,10 @@ export function Login() {
             Registrate aquí
           </a>
         </p>
+          </div>
+        </div>
       </div>
+      
     </div>
   );
 }

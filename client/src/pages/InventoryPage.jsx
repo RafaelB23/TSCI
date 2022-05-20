@@ -1,52 +1,70 @@
-import React from 'react'
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { navDetector } from "../components/navConfiguration";
+import StatusOrder from '../components/statusOrder'
+import { useOrders } from "../context/ordersContext";
 //import {  } from "../context/";
-export function Inventory(){
-    //const { drivers, getDriver } = useDrivers();
-    const navigate = useNavigate()
-    const handlePart=(()=>{
-        navigate("/articulo");
-      }) 
-return (
+export function Inventory() {
+  const { orders, getOrder /* , user */ } = useOrders();
+  useEffect(() => {
+    navDetector("inventario");
+  });
+
+  const navigate = useNavigate();
+  const handlePart = () => {
+    navigate("/articulo");
+  };
+  return (
     <div className="container">
       <div className="mt-4">
-        <h1 className="text-center">Inventario</h1>
+        <h1 className="text-center h2d">Sucursal: Av. Ejemplo</h1>
+      </div>
+      <div className="d-flex justify-content-center">
+        <button className="btn btn-primary mt-2" type="button" onClick={handlePart}>
+          Registrar Articulo
+        </button>
       </div>
       <div
         className="overflow-auto border border-ligth mt-4 p-3"
         style={{ height: "50vh" }}
       >
         <table className="table table-ligth table-hover fs-6">
-          <thead> 
+          <thead>
             <tr>
-              <th scope="col">No. Pieza</th>
-              <th scope="col">Articulo</th>
-              <th scope='col'>Cantidad</th>
-              <th scope="col">Nota</th>
-              <th scope="col">Planta</th>
+              <th className="text-start text-nowrap" scope="col">Estado del pedido</th>
+              <th className="text-end text-nowrap" scope="col">Cliente</th>
+              <th className="text-end text-nowrap" scope="col">Descripcion</th>
+              <th className="text-end text-nowrap" scope="col">No. Piezas</th>
+              <th className="text-end" scope="col">id</th>
             </tr>
           </thead>
-           <tbody>  
-            
-                <tr
+          <tbody>
+            {orders
+              .map((order) => {
+                if(order.status === "1"){
+                  return (
+                    <tr
+                  key={order._id}
+                  role="button"
+                  onClick={async () => {                    
+                    await getOrder(order._id)
+                    navigate('/orden/' + order._id)
+                  }}
                 >
-                  <td>013456</td>
-                  <td>Tubo de Cobre</td>
-                  <td className="text-break">200</td>
-                  <td >Tubo de 3/4 pulgadas</td>
-                  <td className="text-end">Centro</td>
+                  <td className="text-start"> <StatusOrder value={order.status}/> </td>
+                  <td className="text-end">{order.owner}</td>
+                  <td className="text-break text-end">{order.description.specs}</td>
+                  <td className="text-end">{order.description.no_pieces}</td>
+                  <td className="text-end">{order._id}</td>
                 </tr>
-              
-              
+                  )
+                } return null
+              })
+              .reverse()}
           </tbody>
         </table>
       </div>
-      <div className="d-flex justify-content-center">
-        <button class="btn btn-primary" type="button" onClick={handlePart}>
-        Registrar Articulo
-        </button>
-      </div>
+      
     </div>
-        
-);
+  );
 }

@@ -28,7 +28,7 @@ export function SignUp() {
 
   return (
     <div>
-      <div className="container col-4 mt-4 text-center">
+      <div className="container col-xl-4 mt-4 text-center">
         <h1 className="h3 mb-3">Registrate</h1>
         <Formik
           initialValues={user}
@@ -192,7 +192,7 @@ export function SignUp() {
         </Formik>
         <p className="m-0">
           Si ya tienes cuenta{" "}
-          <a href="/" className="link-primary text-end m-0">
+          <a href="/login" className="link-primary text-end m-0">
             Inicia sesión aquí
           </a>
         </p>

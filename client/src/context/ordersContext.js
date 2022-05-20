@@ -2,6 +2,8 @@ import { createContext, useState, useContext, useEffect } from 'react'
 import { createOrderRequest, deleteOrderRequest, getOrderRequest, getOrdersRequest, testOrderRequest, updateOrderRequest, deleteTmpRequest } from '../api/orders'
 import { authUser } from './authContext'
 
+// import { createDriver, getDriver, updateDriver, deleteDriver, getDrivers} from './driversContext'
+
 export const ordersContext = createContext()
 
 export const useOrders = () => {
@@ -14,6 +16,8 @@ export const OrderProvider = ({ children }) => {
 
     const [orders, setOrders] = useState([])
     const [user, setUser] = useState([])
+    // const [drivers, setDrivers] = useState([])
+
 
     useEffect(() => {
         (async () => {
@@ -58,15 +62,15 @@ export const OrderProvider = ({ children }) => {
 
     return <ordersContext.Provider value={{
         orders,
-        authUser,
-        setUser,
-        user,
         createOrder,
         getOrder,
         updateOrder,
         deleteOrder,
         testOrder,
-        deleteTmp
+        deleteTmp,
+        user,
+        authUser,
+        setUser
     }}>
         {children}
     </ordersContext.Provider>

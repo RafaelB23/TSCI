@@ -69,7 +69,7 @@ export function FormOrder() {
   };
 
   return (
-    <div className="container-sm col-6">
+    <div className="container-sm col-lg-4">
       <Formik
         initialValues={order}
         validationSchema={Yup.object({
@@ -90,7 +90,7 @@ export function FormOrder() {
             try {
               await updateOrder(params.id, values);
               toast.success("La orden se a guardado exitosamente");
-              navigate("/");
+              navigate("/ordenes");
             } catch (error) {
               toast.error("No se a podido actualizar la orden");
             }

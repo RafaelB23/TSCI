@@ -5,8 +5,7 @@ import {
   NewSite, Plantas,Machines, NewBill, Inventory, NewPiece
 } from './pages'
 import { Route, Routes } from 'react-router-dom'
-import { OrderProvider } from './context/ordersContext'
-import { DriverProvider } from './context/driversContext'
+import { OrderProvider, DriverProvider, MachineProvider, SucursalProvider } from "./Context";
 import { NavBar, Footer } from './components'
 import { Toaster } from 'react-hot-toast'
 
@@ -14,7 +13,10 @@ function App() {
   return (
     <div className='vh-100'>
       <OrderProvider> 
-            <NavBar/>
+        <DriverProvider>
+          <MachineProvider>
+            <SucursalProvider>
+              <NavBar/>
               <Routes>
                 <Route path='/' element={<HomePage />} />
                 <Route path='/login' element={<Login />} />
@@ -24,8 +26,9 @@ function App() {
                 <Route path='/orden/:id' element={<OrderPage />} />
                 <Route path='/operador' element={<NewEmployee/>} /> 
                 <Route path='/operadores' element={<Emplpyees/>} /> 
-                <Route path='/registroplanta' element={<NewSite/>} />
-                <Route path='/plantas' element={<Plantas/>} />
+                <Route path='/sucursal' element={<NewSite/>} />
+                <Route path='/sucursal/:id' element={<NewSite/>} />
+                <Route path='/sucursales' element={<Plantas/>} />
                 <Route path='/maquina' element={<NewMachine/>} />
                 <Route path='/maquinas' element={<Machines/>} />
                 <Route path='/facturas' element={<NewBill/>} />
@@ -35,6 +38,9 @@ function App() {
               </Routes>
               <Toaster/>
               <Footer/>
+            </SucursalProvider>
+          </MachineProvider>
+        </DriverProvider>
       </OrderProvider>
     </div>
   );

@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
+import { navDetector } from '../components/navConfiguration';
 //import { use } from "../context/";
     
 export function NewBill() {
     const navigate = useNavigate();
+    useEffect(()=>{
+      navDetector("facturas")
+    })
     /*const [drivers, setDriver] = useDrivers({
       name: {
         first_name: "",
