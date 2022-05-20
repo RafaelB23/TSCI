@@ -5,13 +5,14 @@ import {
   NewSite, Plantas,Machines, NewBill, Inventory, NewPiece
 } from './pages'
 import { Route, Routes } from 'react-router-dom'
-import { OrderProvider, DriverProvider, MachineProvider, SucursalProvider } from "./Context";
+import { OrderProvider, DriverProvider, MachineProvider, SucursalProvider, UserProvider } from "./Context";
 import { NavBar, Footer } from './components'
 import { Toaster } from 'react-hot-toast'
 
 function App() {
   return (
     <div className='vh-100'>
+      <UserProvider>
       <OrderProvider> 
         <DriverProvider>
           <MachineProvider>
@@ -42,6 +43,7 @@ function App() {
           </MachineProvider>
         </DriverProvider>
       </OrderProvider>
+      </UserProvider>
     </div>
   );
 }

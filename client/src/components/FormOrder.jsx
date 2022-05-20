@@ -4,6 +4,11 @@ import * as Yup from "yup";
 import { useOrders } from "../context/ordersContext.js";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useMachines } from "../context/machinesContext.js";
+import { useDrivers } from "../context/driversContext.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {} from "@fortawesome/free-brands-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export function FormOrder() {
   const {
@@ -14,6 +19,8 @@ export function FormOrder() {
     testOrder,
     deleteTmp,
   } = useOrders();
+  const { machines } = useMachines();
+  const { drivers } = useDrivers();
   const navigate = useNavigate();
   const params = useParams();
 
@@ -25,6 +32,7 @@ export function FormOrder() {
     },
     blueprints: null,
   });
+  // console.log(drivers);
   useEffect(() => {
     (async () => {
       if (params.id) {
@@ -101,8 +109,8 @@ export function FormOrder() {
                 success: "La orden se a guardado exitosamente",
                 error: "No se a podido completar el registro de la orden",
               });
-              
-              if(values.blueprints?._id){
+
+              if (values.blueprints?._id) {
                 const status = await deleteTmp(values.blueprints._id);
                 console.log(status);
               }
@@ -189,7 +197,18 @@ export function FormOrder() {
                 />
               </div>
             </div>
-
+            <label htmlFor="no_pieces" className="form-label fw-bold m-0 h3">
+              Proceso
+            </label>
+            <hr />
+            <div className="border border-ligth p-3">
+              {process(machines, drivers)}
+              <button type="button" className="btn btn-primary w-100">
+                <FontAwesomeIcon icon={faPlus} size="1x" />
+                <br />
+                Agregar maquina
+              </button>
+            </div>
             <div className="d-flex justify-content-end">
               <button type="submit" className="btn btn-primary col-3">
                 Guardar
@@ -209,4 +228,52 @@ export function FormOrder() {
       </Formik>
     </div>
   );
+}
+
+function procesoInput(machines, drivers) {
+  return (
+    <div>
+      <label htmlFor="no_pieces" className="form-label fw-bold">
+        Maquina
+      </label>
+      <Field
+        id="machine"
+        className="form-select mb-3"
+        name="proceso.machine"
+        placeholder="Numero de piezas"
+        component="select"
+        required
+      >
+        <option defaultValue>Selecciona el nombre de la maquina</option>
+        {machines.map((machine) => {
+          return <option value={machine.noMachine}>{machine.noMachine}</option>;
+        })}
+      </Field>
+      <label htmlFor="no_pieces" className="form-label fw-bold">
+        Operador
+      </label>
+      <Field
+        id="driver"
+        className="form-select mb-3"
+        name="proceso.driver"
+        placeholder="Numero de piezas"
+        component="select"
+        required
+      >
+        <option defaultValue>Selecciona quien sera el operador</option>
+        {drivers.map((driver) => {
+          return (
+            <option
+              value={driver.name.first_name + " " + driver.name.last_name}
+            >
+              {driver.name.first_name + " " + driver.name.last_name}
+            </option>
+          );
+        })}
+      </Field>
+    </div>
+  );
+}
+function process(machines, drivers) {
+  return procesoInput(machines, drivers)
 }

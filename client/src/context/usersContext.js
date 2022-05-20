@@ -16,13 +16,14 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         (async () => {
             const res = await getUsersRequest()
-            setUsers(res.data)
+            setUsers(res)
         })()
     }, [])
 
     const createUser = async (user) => {
         const res = await createUserRequest(user)
-        setUsers([...users, res.data])
+        return res.data
+        // setUsers([...users, res.data])
     }
 
     const getUser = async (userId) => {
