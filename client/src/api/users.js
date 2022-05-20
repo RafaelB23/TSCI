@@ -1,11 +1,11 @@
 import axios from 'axios'
 
-export const getUsersRequest = async () => await axios.get('/user')
+export const getUsersRequest = async () => await axios.get('/users')
 
-export const getUserRequest = async (userId) => await axios.get('/user/' + userId)
+export const getUserRequest = async (userId) => await axios.get('/users/' + userId)
 
-export const createUserRequest = async (user) => await axios.post('/user', driver)
+export const createUserRequest = async (user) => await axios.post('/users', user)
 
-export const updateUserRequest = async (userId, newFields) => await axios.put('/user/' + userId, newFields)
+export const updateUserRequest = async (userId, newFields) => await axios.put('/users/' + userId, newFields)
 
-export const deleteUserRequest = async (userId) => await axios.delete('/user/' + userId)
+export const deleteUserRequest = async (userId) => await axios.delete('/users/' + userId)

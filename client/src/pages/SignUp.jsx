@@ -2,17 +2,21 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { useState } from "react";
+import { useUsers } from '../context/usersContext'
+import { toast } from "react-hot-toast";
 
 export function SignUp() {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState({
+  const { createUser } = useUsers()
+
+  const [userdata, setUser] = useState({
     name: "",
     lastname: {
       paternal: "",
       maternal: "",
     },
-    phone: "",
+    phone_number: "",
     mail: "",
     password: "",
     cpassword: "",
@@ -31,11 +35,18 @@ export function SignUp() {
       <div className="container col-xl-4 mt-4 text-center">
         <h1 className="h3 mb-3">Registrate</h1>
         <Formik
-          initialValues={user}
-          onSubmit={(values, actions) => {
-            setUser(values);
-            console.log(values);
-            navigate("/");
+          initialValues={userdata}
+          onSubmit={async (values, actions) => {
+            toast.loading("Cargando...");
+            const res = await createUser(values)
+            toast.dismiss();
+            if (typeof res === "string") {
+              toast.error(res);
+            } else {
+              await setUser(values);
+              toast.success("El usuario se a registro exitosamente");
+              navigate("/");
+            }                    
           }}
           enableReinitialize
         >
@@ -63,7 +74,7 @@ export function SignUp() {
                     type="text"
                     className="form-control mb-0"
                     id="floatinglastM"
-                    name="lastname.paternal"
+                    name="lastname.maternal"
                     placeholder="Apellido materno"
                   />
                   <label htmlFor="floatinglastM">Apellido materno</label>
@@ -73,7 +84,7 @@ export function SignUp() {
                     type="text"
                     className="form-control mb-0"
                     id="floatinglastP"
-                    name="lastname.maternal"
+                    name="lastname.paternal"
                     placeholder="name@example.com"
                   />
                   <label htmlFor="floatinglastP">Apellido paterno</label>
@@ -85,7 +96,7 @@ export function SignUp() {
                   type="tel"
                   className="form-control mb-3"
                   id="floatingNumber"
-                  name="phone"
+                  name="phone_number"
                   placeholder="81 8000 0000"
                   required
                 />

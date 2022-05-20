@@ -1,17 +1,18 @@
 import User from '../models/User.js'
 
 export const createUser = async(req, res) => {
+    console.log(req.body)
     try {
         const userExist = await User.findOne({mail: req.body.mail})
     if(!userExist){
         const newUser = new User(req.body)
-        newUser.save()
+        await newUser.save()
         res.json(newUser)
     }else{
         throw new Error("El correo ya esta registrado")
     }
     } catch (error) {
-        res.json({message: error.message})
+        res.send(error.message)
     }
 }
 
@@ -20,7 +21,7 @@ export const getUsers = async(req, res) => {
         const users = await User.find({})
         res.json(users)
     } catch (error) {
-        res.json({message: error.message})
+        res.send(error.message)
     }
 }
 
@@ -28,7 +29,7 @@ export const getUser = async(req, res) => {
     try {
         const user = await User.findById(req.param.id)
         if(!user) throw new Error("No se encontro al usuario")
-        res.json(user)
+        res.res(user)
     } catch (error) {
         res.json({message: error.message})
     }
