@@ -50,7 +50,7 @@ export function Plantas() {
                   role="button"
                   onClick={async () => {
                     await getSucursal(site._id);
-                    navigate("/planta/" + site._id);
+                    // navigate("/planta/" + site._id);
                   }}
                 >
                   <td>{site.name}</td>

@@ -51,7 +51,7 @@ export function Machines() {
                   role="button"
                   onClick={async () => {
                     await getMachine(machine._id);
-                    navigate("/usuario/" + machine._id);
+                    // navigate("/usuario/" + machine._id);
                   }}
                 >
                   <td>{machine._id}</td>

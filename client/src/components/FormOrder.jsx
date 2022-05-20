@@ -31,6 +31,7 @@ export function FormOrder() {
       no_pieces: "",
     },
     blueprints: null,
+    status: ""
   });
   // console.log(drivers);
   useEffect(() => {
@@ -56,7 +57,7 @@ export function FormOrder() {
                 await deleteOrder(params.id);
                 toast.success("La orden a sido eliminada exitosamente");
                 toast.dismiss(t.id);
-                navigate("/");
+                navigate("/ordenes");
               } catch (error) {
                 toast.error("No se a podido eliminar la  orden");
                 toast.dismiss(t.id);
@@ -104,17 +105,18 @@ export function FormOrder() {
             }
           } else {
             try {
-              await toast.promise(createOrder(values), {
-                loading: "Cargando...",
-                success: "La orden se a guardado exitosamente",
-                error: "No se a podido completar el registro de la orden",
-              });
-
+              await createOrder(values)
+              // await toast.promise(createOrder(values), {
+              //   loading: "Cargando...",
+              //   success: "La orden se a guardado exitosamente",
+              //   error: "No se a podido completar el registro de la orden",
+              // });
+              
               if (values.blueprints?._id) {
                 const status = await deleteTmp(values.blueprints._id);
                 console.log(status);
               }
-              navigate("/");
+              navigate("/ordenes");
             } catch (error) {
               console.log(error);
               toast.error("No se a podido completar el registro de la orden");
@@ -197,6 +199,22 @@ export function FormOrder() {
                 />
               </div>
             </div>
+            <label htmlFor="no_pieces" className="form-label fw-bold">
+              Estado de la orden
+            </label>
+            <Field
+              id="status"
+              className="form-select mb-3"
+              name="status"
+              placeholder="Numero de piezas"
+              component="select"
+              required
+            >
+              <option value={"0"}>Pendiente</option>
+              <option value={"1"}>Lista</option>
+              <option value={"3"}>Cancelada</option>
+              
+            </Field>
             <label htmlFor="no_pieces" className="form-label fw-bold m-0 h3">
               Proceso
             </label>
@@ -275,5 +293,5 @@ function procesoInput(machines, drivers) {
   );
 }
 function process(machines, drivers) {
-  return procesoInput(machines, drivers)
+  return procesoInput(machines, drivers);
 }
