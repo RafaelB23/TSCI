@@ -2,13 +2,27 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { navDetector } from "../components/navConfiguration";
 import { useDrivers } from "../context/driversContext";
-
+import { useOrders } from "../context/ordersContext";
 export function Emplpyees() {
   const { drivers, getDriver } = useDrivers();
-
+  const { user } = useOrders();
   useEffect(()=>{
     navDetector("operadores", true)
-  })
+    if(user.length === 0){
+      navigate("/login")
+   }
+
+   navDetector("ordenes")
+
+   const path = document.location.pathname;
+   const navUl = document.getElementById("navUl");
+   const navForm = document.getElementById("navForm");
+
+   if (path !== "/signup" || path !== "/login"  || path !== "/" ) {
+     navUl.style.visibility = "visible";
+     navForm.style.visibility = "visible";
+   }
+ })
 
   const navigate = useNavigate();
 
