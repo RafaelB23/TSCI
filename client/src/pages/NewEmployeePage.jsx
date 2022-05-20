@@ -27,7 +27,7 @@ export function NewEmployee() {
       state: "",
     },
   });
-  
+    
   return (
     <div>
       <div className="container mt-4 text-center">
@@ -101,10 +101,12 @@ export function NewEmployee() {
                 />
                 <label htmlFor="floatingInput">Correo Electronico</label>
               </div>
-              <Field as="select" name="color" className="form-select mb-3">
-                <option value="Empleado">Empleado</option>
-                <option value="Admin">Administrador</option>
-              </Field>
+              <div className="form-floating">
+                <Field as="select" name="rol" className="form-select mb-3" required>
+                  <option value="Empleado">Empleado</option>
+                  <option value="Admin">Administrador</option>
+                </Field>
+              </div>
               <div className="form-floating">
                 <Field
                   type="password"

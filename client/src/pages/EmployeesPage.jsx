@@ -41,7 +41,7 @@ export function Emplpyees() {
               <th scope="col">Nombre</th>
               <th scope="col">Email</th>
               <th scope="col">Puesto</th>
-              <th scope="col">Area</th>
+              <th scope="col">Rol</th>
             </tr>
           </thead>
           <tbody>
@@ -55,10 +55,12 @@ export function Emplpyees() {
                     // navigate("/usuario/" + user._id);
                   }}
                 >
+                  {console.log(user)}
                   <td>{user._id}</td>
                   <td>{user.name.first_name + " " + user.name.last_name}</td>
                   <td className="text-break">{user.mail}</td>
                   <td className="text-start">{user.employment}</td>
+                  <td>{user.rol}</td>
                 </tr>
               ))
               .reverse()}
