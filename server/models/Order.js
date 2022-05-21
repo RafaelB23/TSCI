@@ -33,7 +33,7 @@ const orderSchema = new mongoose.Schema({
     type: String,
     default: Date.now,
   },
-  status:{ type: String, default: "Pendiente"}
+  status:{ type: String, default: "0"}
 });
 
 export default mongoose.model("Order", orderSchema);

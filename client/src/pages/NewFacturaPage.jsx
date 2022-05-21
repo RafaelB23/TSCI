@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect , useState} from 'react'
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { navDetector } from '../components/navConfiguration';
@@ -9,36 +9,25 @@ export function NewBill() {
     useEffect(()=>{
       navDetector("facturas")
     })
-    /*const [drivers, setDriver] = useDrivers({
-      name: {
-        first_name: "",
-        last_name: "",
-      },
-      phone_number: "",
-      mail: "",
-      password:"",
-      employment:"",
-      salary_hour:"",
+    const [factura, setFactura] = useState({
+      correo:"",
       rfc:"",
-      hiring_date:"",
-      address:{
-        street:"",
-        cp:"",
-        city:"",
-        state:""
-      }
-    });*/
+      cp:"",
+      no:"",
+      nt:"",
+    
+    });
   
     return (
       <div>
-        <div className="container-sm col-lg-4 mt-4 text-center">
-          <h1 className="h3 mb-3">Registro de Maquina</h1>
+        <div className="container col-4 mt-4 text-center">
+          <h1 className="h3 mb-3">Registro de Factura</h1>
           <Formik
-            //initialValues={drivers}
+            initialValues={factura}
             onSubmit={(values, actions) => {
-              //setDriver(values);
+              setFactura(values);
               console.log(values);
-              navigate("/");
+              navigate("/ordenes");
             }}
             enableReinitialize
           >
@@ -55,7 +44,7 @@ export function NewBill() {
                       type="email"
                       className="form-control mb-3"
                       id="floatingInput"
-                      name=""
+                      name="correo"
                       placeholder="foo@example.com"
                       required
                     />
@@ -66,7 +55,7 @@ export function NewBill() {
                       type="text"
                       className="form-control mb-3"
                       id="floatingInput"
-                      name=""
+                      name="rfc"
                       placeholder="RFC"
                       required
                     />
@@ -77,7 +66,7 @@ export function NewBill() {
                       type="number"
                       className="form-control mb-3"
                       id="floatingInput"
-                      name=""
+                      name="cp"
                       placeholder="CP"
                       required
                     />
@@ -88,7 +77,7 @@ export function NewBill() {
                       type="number"
                       className="form-control mb-3"
                       id="floatingInput"
-                      name=""
+                      name="no"
                       placeholder="Id de orden"
                       required
                     />
@@ -99,7 +88,7 @@ export function NewBill() {
                       type="number"
                       className="form-control mb-3"
                       id="floatingInput"
-                      name=""
+                      name="nt"
                       placeholder="#TRANSACCION"
                       required
                     />

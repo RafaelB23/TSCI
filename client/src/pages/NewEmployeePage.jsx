@@ -15,6 +15,7 @@ export function NewEmployee() {
     phone_number: "",
     mail: "",
     password: "",
+    rol:"",
     employment: "",
     salary_hour: "",
     rfc: "",
@@ -26,7 +27,7 @@ export function NewEmployee() {
       state: "",
     },
   });
-
+    
   return (
     <div>
       <div className="container mt-4 text-center">
@@ -100,6 +101,23 @@ export function NewEmployee() {
                 />
                 <label htmlFor="floatingInput">Correo Electronico</label>
               </div>
+              <div className="form-floating">
+                <Field as="select" name="rol" className="form-select mb-3" required>
+                  <option value="Empleado">Empleado</option>
+                  <option value="Admin">Administrador</option>
+                </Field>
+              </div>
+              <div className="form-floating">
+                <Field
+                  type="password"
+                  className="form-control mb-3"
+                  id="floatingInput"
+                  name="password"
+                  placeholder="Contrasena"
+                  required
+                />
+                <label htmlFor="floatingInput">Contrasena</label>
+              </div>
               <div className="form-floating w-30">
                 <Field
                   type="text"
@@ -151,7 +169,7 @@ export function NewEmployee() {
                   className="form-control mb-3"
                   id="floatingInput"
                   name="address.cp"
-                  placeholder="00000"
+                  placeholder="66000"
                   required
                 />
                 <label htmlFor="floatingInput">Codigo Postal</label>
@@ -162,7 +180,7 @@ export function NewEmployee() {
                   className="form-control mb-3"
                   id="floatingInput"
                   name="address.city"
-                  placeholder="VECJ880326 XXX"
+                  placeholder="Ciudad"
                   required
                 />
                 <label htmlFor="floatingInput">Ciudad</label>
@@ -173,7 +191,7 @@ export function NewEmployee() {
                   className="form-control mb-3"
                   id="floatingInput"
                   name="address.state"
-                  placeholder="VECJ880326 XXX"
+                  placeholder="Estado"
                   required
                 />
                 <label htmlFor="floatingInput">Estado</label>

@@ -18,6 +18,8 @@ export const createDriver = async (req, res) => {
         },
         "phone_number":"0123456789",
         "mail":"mail@empresa.com",
+        "rol":"Admin",
+        "rfc":"asfg123456789",
         "address":{
             "street": "calle 1234",
             "cp": 12345,
@@ -32,7 +34,7 @@ export const createDriver = async (req, res) => {
     try {
         const driverExist = await Driver.findOne({mail: req.body.mail})
         if(!driverExist){
-            const { name, phone_number, mail, rfc, address, hiring_date, employment, salary_hour } = req.body
+            const { name, phone_number, mail, rfc, rol, address, hiring_date, employment, salary_hour } = req.body
             let profile_img
             if(req.files?.profile_img){
                 const result = await uplaodImage(req.files.profile_img.tempFilePath)
@@ -42,7 +44,7 @@ export const createDriver = async (req, res) => {
                     public_id: result.public_id
                 }
             }
-            const newDriver = new Driver({ name, phone_number, mail, rfc, address, hiring_date, employment, salary_hour, profile_img })
+            const newDriver = new Driver({ name, phone_number, mail, rol,rfc, address, hiring_date, employment, salary_hour, profile_img })
             await newDriver.save()
             return res.json(newDriver)
         }else{

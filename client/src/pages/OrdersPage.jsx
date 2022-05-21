@@ -7,14 +7,14 @@ import StatusOrder from '../components/statusOrder'
 import { navDetector } from "../components/navConfiguration";
 
 export function OrdersPage() {
-  const { orders, getOrder/* , user */ } = useOrders();
+  const { orders, getOrder , user  } = useOrders();
   const navigate = useNavigate();
 
   useEffect(()=>{
 
-    // if(user.length === 0){
-    //   navigate("/login")
-    // }
+     if(user.length === 0){
+       navigate("/login")
+    }
 
     navDetector("ordenes")
 

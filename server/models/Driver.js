@@ -27,6 +27,7 @@ const driverSchema = new mongoose.Schema({
             state:{type: String, required: true, trim: true}
         }, { _id : false })
     },
+    rol:{type:String,required:true,trim: true}, //User,Employee
     hiring_date:{
         type: Date
     },

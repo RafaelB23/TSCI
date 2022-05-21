@@ -94,18 +94,20 @@ export function FormOrder() {
         })}
         onSubmit={async (values, actions) => {
           // const files = document.getElementById('formFileMultiple')
-          // console.log(values);
+          //console.log(values);
           if (params.id) {
             try {
               await updateOrder(params.id, values);
               toast.success("La orden se a guardado exitosamente");
-              navigate("/ordenes");
+              //navigate("/ordenes");
             } catch (error) {
               toast.error("No se a podido actualizar la orden");
             }
           } else {
             try {
-              await createOrder(values)
+              //await createOrder(values)
+              const res = await createOrder(values)
+              console.log(res.data)
               // await toast.promise(createOrder(values), {
               //   loading: "Cargando...",
               //   success: "La orden se a guardado exitosamente",
@@ -207,12 +209,13 @@ export function FormOrder() {
               className="form-select mb-3"
               name="status"
               placeholder="Numero de piezas"
-              component="select"
+              as="select"
               required
             >
-              <option value={"0"}>Pendiente</option>
-              <option value={"1"}>Lista</option>
-              <option value={"3"}>Cancelada</option>
+              <option defaultValue="0">Selecciona estado</option>
+              <option value="0">Pendiente</option>
+              <option value="1">Lista</option>
+              <option value="3">Cancelada</option>
               
             </Field>
             <label htmlFor="no_pieces" className="form-label fw-bold m-0 h3">
